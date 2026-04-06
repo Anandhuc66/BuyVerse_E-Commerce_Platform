@@ -1,0 +1,124 @@
+<div class="product-page">
+  <div class="product-page-inner">
+
+    <!-- Breadcrumb -->
+    <div class="page-breadcrumb">
+      <a routerLink="/">Home</a>
+      <span class="separator">/</span>
+      <span class="current">Products</span>
+    </div>
+
+    <div class="product-layout">
+
+      <!-- LEFT FILTER PANEL -->
+      <aside class="filter-sidebar">
+        <div class="filter-header">
+          <h5>Filters</h5>
+        </div>
+
+        <!-- Brand Filter -->
+        <div class="filter-group">
+          <h6 class="filter-group-title">Brand</h6>
+          <input type="text" class="form-control form-control-sm filter-search" placeholder="Search brand..." />
+          <div class="filter-options">
+            <label class="filter-option" *ngFor="let brand of brands">
+              <input
+                type="checkbox"
+                (change)="toggleBrand(brand)"
+                [checked]="selectedBrands.includes(brand)"
+              />
+              <span>{{ brand }}</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Price Filter -->
+        <div class="filter-group">
+          <h6 class="filter-group-title">Price Range</h6>
+          <div class="price-display">₹{{ selectedMinPrice | number }} — ₹{{ selectedMaxPrice | number }}</div>
+          <input
+            type="range"
+            [min]="minPrice"
+            [max]="maxPrice"
+            [(ngModel)]="selectedMinPrice"
+            (input)="updatePriceFilter()"
+            class="form-range"
+          />
+          <input
+            type="range"
+            [min]="minPrice"
+            [max]="maxPrice"
+            [(ngModel)]="selectedMaxPrice"
+            (input)="updatePriceFilter()"
+            class="form-range"
+          />
+        </div>
+
+        <!-- Sort -->
+        <div class="filter-group">
+          <h6 class="filter-group-title">Sort By</h6>
+          <select class="form-select form-select-sm" #sortSelect (change)="changeSorting(sortSelect.value)">
+            <option value="relevance">Relevance</option>
+            <option value="lowToHigh">Price: Low to High</option>
+            <option value="highToLow">Price: High to Low</option>
+          </select>
+        </div>
+      </aside>
+
+      <!-- RIGHT PRODUCT LIST -->
+      <div class="product-results">
+        <div class="results-header">
+          <span class="results-count">Showing <strong>{{ products.length }}</strong> results</span>
+        </div>
+
+        <!-- Skeleton Loading -->
+        <div *ngIf="loading" class="product-list-items">
+          <div class="product-row" *ngFor="let i of [1,2,3,4,5,6]">
+            <div class="product-row-image"><div class="skeleton" style="width:100%;height:100%;border-radius:8px;"></div></div>
+            <div class="product-row-info" style="flex:1;">
+              <div class="skeleton skeleton-text" style="width:70%;height:16px;"></div>
+              <div class="skeleton skeleton-text" style="width:40%;height:12px;margin-top:8px;"></div>
+            </div>
+            <div class="product-row-action">
+              <div class="skeleton" style="width:80px;height:20px;"></div>
+              <div class="skeleton" style="width:110px;height:32px;margin-top:8px;border-radius:6px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty state -->
+        <div *ngIf="!loading && products.length === 0" class="empty-state-container">
+          <i class="bi bi-search"></i>
+          <p>No products found matching your criteria.</p>
+        </div>
+
+        <!-- Product List -->
+        <div *ngIf="!loading" class="product-list-items">
+          <div
+            class="product-row hover-lift"
+            *ngFor="let product of products; trackBy: trackByProduct"
+            (click)="viewDetails(product)"
+          >
+            <div class="product-row-image">
+              <img [src]="product.image" [alt]="product.name" loading="lazy" width="150" height="150" />
+            </div>
+            <div class="product-row-info">
+              <h5 class="product-row-title">{{ product.name }}</h5>
+              <div class="product-row-meta">
+                <span *ngIf="product.brand"><i class="bi bi-tag me-1"></i>{{ product.brand }}</span>
+                <span *ngIf="product.category"><i class="bi bi-grid me-1"></i>{{ product.category }}</span>
+              </div>
+            </div>
+            <div class="product-row-action" (click)="$event.stopPropagation()">
+              <div class="product-row-price">₹{{ product.price | number }}</div>
+              <button class="btn btn-primary btn-sm" (click)="addToCart(product)">
+                <i class="bi bi-cart-plus me-1"></i> Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

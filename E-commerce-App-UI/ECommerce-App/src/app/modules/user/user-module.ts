@@ -1,0 +1,36 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { UserRoutingModule } from './user-routing-module';
+import { Homepage1 } from './homepage1/homepage1';
+import { ProductList } from './product-list/product-list';
+import { ProductDetails } from './product-details/product-details';
+import { Cart } from './cart/cart';
+import { Checkout } from './checkout/checkout';
+import { Orders } from './orders/orders';
+import { PaymentSuccess } from './payment-success/payment-success';
+import { PaymentFailure } from './payment-failure/payment-failure';
+import { Profile } from './profile/profile';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
+@NgModule({
+  declarations: [
+    Homepage1,
+    ProductList,
+    ProductDetails,
+    Cart,
+    Checkout,
+    Orders,
+    PaymentSuccess,
+    PaymentFailure,
+    Profile
+  ],
+  imports: [
+    CommonModule,
+    UserRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
+  ]
+})
+export class UserModule { }

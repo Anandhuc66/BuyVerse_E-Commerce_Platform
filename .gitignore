@@ -1,0 +1,191 @@
+# ============================================================
+# Root .gitignore — covers both Frontend (Angular) & Backend (.NET)
+# ============================================================
+
+# ----- System files -----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ----- IDE / Editor -----
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+*.sublime-workspace
+*.suo
+*.user
+*.rsuser
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# ============================================================
+#  FRONTEND — Angular
+# ============================================================
+
+# Build output
+**/dist/
+**/tmp/
+**/out-tsc/
+**/bazel-out/
+
+# Dependencies
+**/node_modules/
+
+# Logs
+npm-debug.log
+yarn-error.log
+
+# Angular cache
+**/.angular/cache
+
+# Misc
+.sass-cache/
+**/connect.lock
+**/coverage/
+**/libpeerconnection.log
+testem.log
+**/typings/
+
+# ============================================================
+#  BACKEND — .NET / ASP.NET Core
+# ============================================================
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio cache
+.vs/
+*.[Cc]ache
+!?*.[Cc]ache/
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.VC.opendb
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Build artifacts
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+*.binlog
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+
+# Coverage
+coverage*.json
+coverage*.xml
+coverage*.info
+*.coverage
+*.coveragexml
+*.dotCover
+
+# Publish
+*.pubxml
+*.publishproj
+PublishScripts/
+*.[Pp]ublish.xml
+*.azurePubxml
+
+# Database files
+*.mdf
+*.ldf
+*.ndf
+
+# Mono
+mono_crash.*
+
+# Generated files
+Generated\ Files/
+
+# .NET misc
+*.GhostDoc.xml
+.ntvs_analysis.dat
+*.plg
+*.opt
+*.vbw
+*.nvuser
+.mfractor/
+.localhistory/
+.fake/
+.cr/personal
+.paket/paket.exe
+paket-files/
+FakesAssemblies/
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+_TeamCity*
+_NCrunch_*
+.*crunch*.local.xml
+nCrunchTemp_*
+*.mm.*
+AutoTest.Net/
+BenchmarkDotNet.Artifacts/
+healthchecksdb
+MigrationBackup/
+.ionide/
+FodyWeavers.xsd
+orleans.codegen.cs
+ScaffoldingReadMe.txt
+StyleCopReport.xml
+
+# Uploaded files (user-generated content)
+**/wwwroot/uploads/
+**/uploads/

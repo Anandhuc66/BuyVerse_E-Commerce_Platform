@@ -1,0 +1,144 @@
+<div class="main-container">
+
+  <nav class="sidebar" [class.collapsed]="isCollapsed">
+    <div class="profile-container">
+      <div class="user-info">
+        <i class="bi bi-person-circle"></i>
+      </div>
+      <div class="admin-data">
+        <h5>BuyVerse Admin</h5>
+        <p>admin@ecommerece.com</p>
+      </div>
+    </div>
+
+    <div class="section-label">MAIN</div>
+
+    <ul class="menu">
+      <!-- Dashboard -->
+      <li routerLink="/admin/dashboard" routerLinkActive="active">
+        <i class="bi bi-house"></i><span class="menu-text">Dashboard</span>
+      </li>
+
+    <!-- roles Dropdown -->
+      <li (click)="toggleDropdown('role')" (keydown.enter)="toggleDropdown('role')" class="menu-item">
+        <i class="bi bi-person-gear"></i>
+        <span class="menu-text">Role Management</span>
+        <i
+          class="bi chevron"
+          [ngClass]="{
+            'bi-chevron-down': isDropdownOpen('role'),
+            'bi-chevron-right': !isDropdownOpen('role')
+          }"
+          *ngIf="!isCollapsed"
+        ></i>
+      </li>
+
+      <ul class="dropdown" [class.dropdown-open]="isDropdownOpen('role')">
+        <li routerLink="/admin/role-add" routerLinkActive="active">Add Role</li>
+        <li routerLink="/admin/roles" routerLinkActive="active">Roles</li>
+      </ul>
+
+
+      <!-- Products Dropdown -->
+      <li (click)="toggleDropdown('products')" (keydown.enter)="toggleDropdown('products')" class="menu-item">
+        <i class="bi bi-box"></i>
+        <span class="menu-text">Products Management</span>
+        <i
+          class="bi chevron"
+          [ngClass]="{
+            'bi-chevron-down': isDropdownOpen('products'),
+            'bi-chevron-right': !isDropdownOpen('products')
+          }"
+          *ngIf="!isCollapsed"
+        ></i>
+      </li>
+
+      <ul class="dropdown" [class.dropdown-open]="isDropdownOpen('products')">
+        <li routerLink="/admin/addproduct" routerLinkActive="active">Add Product</li>
+        <li routerLink="/admin/allproduct" routerLinkActive="active">Products</li>
+      </ul>
+
+    <!-- Category Dropdown -->
+      <li (click)="toggleDropdown('category')" (keydown.enter)="toggleDropdown('category')" class="menu-item">
+        <i class="bi bi-person-gear"></i>
+        <span class="menu-text">Category Management</span>
+        <i
+          class="bi chevron"
+          [ngClass]="{
+            'bi-chevron-down': isDropdownOpen('category'),
+            'bi-chevron-right': !isDropdownOpen('category')
+          }"
+          *ngIf="!isCollapsed"
+        ></i>
+      </li>
+
+      <ul class="dropdown" [class.dropdown-open]="isDropdownOpen('category')">
+        <li routerLink="/admin/category-add" routerLinkActive="active">Add category</li>
+        <li routerLink="/admin/category" routerLinkActive="active">categories</li>
+      </ul>
+
+
+      <!-- Orders -->
+      <li (click)="toggleDropdown('orders')" (keydown.enter)="toggleDropdown('orders')" class="menu-item">
+        <i class="bi bi-person-gear"></i>
+        <span class="menu-text">Order Management</span>
+        <i
+          class="bi chevron"
+          [ngClass]="{
+            'bi-chevron-down': isDropdownOpen('orders'),
+            'bi-chevron-right': !isDropdownOpen('orders')
+          }"
+          *ngIf="!isCollapsed"
+        ></i>
+      </li>
+
+      <ul class="dropdown" [class.dropdown-open]="isDropdownOpen('orders')">
+        <li routerLink="/admin/orders" routerLinkActive="active">Orders</li>
+      </ul>
+
+      <!-- Suppliers -->
+      <li (click)="toggleDropdown('suppliers')" (keydown.enter)="toggleDropdown('suppliers')" class="menu-item">
+        <i class="bi bi-person-gear"></i>
+        <span class="menu-text">Supplier Management</span>
+        <i
+          class="bi chevron"
+          [ngClass]="{
+            'bi-chevron-down': isDropdownOpen('suppliers'),
+            'bi-chevron-right': !isDropdownOpen('suppliers')
+          }"
+          *ngIf="!isCollapsed"
+        ></i>
+      </li>
+
+      <ul class="dropdown" [class.dropdown-open]="isDropdownOpen('suppliers')">
+        <li routerLink="/admin/supplier-add" routerLinkActive="active">Add Supplier</li>
+        <li routerLink="/admin/allsuppliers" routerLinkActive="active">Suppliers</li>
+      </ul>
+
+      <!-- Users -->
+      <li (click)="toggleDropdown('users')" (keydown.enter)="toggleDropdown('users')" class="menu-item">
+        <i class="bi bi-person-gear"></i>
+        <span class="menu-text">user Management</span>
+        <i
+          class="bi chevron"
+          [ngClass]="{
+            'bi-chevron-down': isDropdownOpen('users'),
+            'bi-chevron-right': !isDropdownOpen('users')
+          }"
+          *ngIf="!isCollapsed"
+        ></i>
+      </li>
+
+      <ul class="dropdown" [class.dropdown-open]="isDropdownOpen('users')">
+        <li routerLink="/admin/users" routerLinkActive="active">Users</li>
+      </ul>
+
+      <!-- Settings -->
+      <li routerLink="/admin/settings" routerLinkActive="active" class="menu-item">
+        <i class="bi bi-gear"></i>
+        <span class="menu-text">Settings</span>
+      </li>
+
+    </ul>
+  </nav>
+</div>

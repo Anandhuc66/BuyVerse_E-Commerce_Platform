@@ -1,0 +1,126 @@
+<div class="orders-page">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-bar">
+    <a routerLink="/">Home</a>
+    <i class="bi bi-chevron-right"></i>
+    <span>My Orders</span>
+  </nav>
+
+  <h1 class="orders-heading">My Orders</h1>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading your orders...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && orders.length === 0" class="empty-state">
+    <i class="bi bi-bag-x"></i>
+    <h3>No orders yet</h3>
+    <p>You haven't placed any orders. Start shopping to see them here.</p>
+    <a routerLink="/" class="shop-btn">Start Shopping</a>
+  </div>
+
+  <div *ngFor="let order of orders; trackBy: trackByOrder" class="order-card">
+    <div class="order-header" (click)="toggleOrder(order.id)">
+
+      <div class="order-meta">
+        <div class="order-id">Order #{{ order.id }}</div>
+        <div class="order-date">{{ order.date | date:'mediumDate' }}</div>
+      </div>
+
+      <div class="order-badges">
+        <span class="badge-status" [ngClass]="{
+            'badge-paid': order.paymentStatus === 'Paid',
+            'badge-cod': order.paymentStatus === 'COD',
+            'badge-pending': order.paymentStatus === 'Pending'
+          }">
+          {{ order.paymentStatus === 'COD' ? 'Cash on Delivery' : order.paymentStatus }}
+        </span>
+        <span class="badge-status" [ngClass]="{
+            'badge-pending': order.deliveryStatus === 'Pending',
+            'badge-processing': order.deliveryStatus === 'Processing',
+            'badge-shipped': order.deliveryStatus === 'Shipped',
+            'badge-delivered': order.deliveryStatus === 'Delivered',
+            'badge-cancelled': order.deliveryStatus === 'Cancelled'
+          }">
+          {{ order.deliveryStatus }}
+        </span>
+      </div>
+
+      <i class="bi chevron-icon" [ngClass]="expandedOrder === order.id ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+    </div>
+
+    <div class="order-body">
+      <!-- Info Row -->
+      <div class="order-info-row">
+        <div class="info-block">
+          <span class="info-label"><i class="bi bi-credit-card"></i> Payment</span>
+          <span class="info-value">{{ order.paymentMethod }}</span>
+        </div>
+        <div class="info-block">
+          <span class="info-label"><i class="bi bi-geo-alt"></i> Delivery</span>
+          <span class="info-value">{{ order.shippingAddress }}</span>
+        </div>
+      </div>
+
+      <!-- Order Items -->
+      <div class="order-items">
+        <div *ngFor="let item of order.items; trackBy: trackByOrderItem" class="order-item-row">
+          <img
+            [src]="item.productImage ? baseUrl + item.productImage : 'assets/placeholder.png'"
+            [alt]="item.productName"
+          >
+          <div class="order-item-info">
+            <span class="order-item-name">{{ item.productName }}</span>
+            <span class="order-item-qty">Qty: {{ item.quantity }}</span>
+          </div>
+          <span class="order-item-price">₹{{ item.price }}</span>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="order-footer">
+        <div class="order-total">Total: ₹{{ order.total }}</div>
+        <div class="order-actions">
+          <button *ngIf="order.deliveryStatus === 'Pending' || order.deliveryStatus === 'Processing'"
+            class="action-btn action-cancel" (click)="cancelOrder(order.id); $event.stopPropagation()">
+            <i class="bi bi-x-circle"></i> Cancel
+          </button>
+          <button *ngIf="order.deliveryStatus === 'Cancelled'"
+            class="action-btn action-delete" (click)="deleteOrder(order.id); $event.stopPropagation()">
+            <i class="bi bi-trash"></i> Delete
+          </button>
+          <button *ngIf="order.deliveryStatus === 'Delivered'"
+            class="action-btn action-invoice" (click)="downloadInvoice(order.id); $event.stopPropagation()">
+            <i class="bi bi-download"></i> Invoice
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Tracker (collapsible) -->
+    <div class="order-tracker" *ngIf="expandedOrder === order.id">
+      <div class="timeline">
+        <div class="timeline-step"
+          *ngFor="let step of order.trackingSteps; let i = index"
+          [ngClass]="{
+            completed: step.completed,
+            current: isCurrentStep(order, i)
+          }">
+          <div class="timeline-icon">
+            <div class="blink-circle" *ngIf="isCurrentStep(order, i)"></div>
+            <i [class]="step.icon" [ngClass]="{ 'icon-complete': step.completed }"></i>
+          </div>
+          <div class="timeline-content">
+            <h6>{{ step.title }}</h6>
+            <p>{{ step.date }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

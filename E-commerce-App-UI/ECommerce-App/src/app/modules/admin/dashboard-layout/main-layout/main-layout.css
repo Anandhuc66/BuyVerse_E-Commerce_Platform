@@ -1,0 +1,95 @@
+/* ===== ADMIN MAIN LAYOUT GRID ===== */
+.parent {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: 60px 1fr;
+  height: 100vh;
+  background-color: #F1F5F9;
+  transition: grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+/* ===== SIDEBAR ===== */
+.div1 {
+  grid-row: 1 / span 2;
+  background-color: #F1F5F9;
+  overflow: hidden;
+}
+
+/* ===== HEADER ===== */
+.div2 {
+  background-color: #F1F5F9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  z-index: 10;
+  position: sticky;
+  top: 0;
+  height: 100%;
+  transition: padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== MAIN CONTENT ===== */
+.div5 {
+  background-color: #F1F5F9;
+  padding: var(--space-2);
+  padding-top: var(--space-3);
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom scrollbar */
+.div5::-webkit-scrollbar { width: 6px; }
+.div5::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+.div5::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ===== COLLAPSED SIDEBAR MODE ===== */
+.parent.collapsed {
+  grid-template-columns: 80px 1fr;
+}
+
+/* ===== RESPONSIVE LAYOUT ===== */
+@media (max-width: 992px) {
+  .parent {
+    grid-template-columns: 80px 1fr;
+  }
+
+  .div1 {
+    position: fixed;
+    height: 100%;
+    z-index: 20;
+    left: -250px;
+    transition: left 0.3s ease;
+  }
+
+  .parent.sidebar-open .div1 {
+    left: 0;
+  }
+
+  .div2 {
+    padding: 0 var(--space-3);
+  }
+
+  .div5 {
+    margin: var(--space-1);
+    padding: var(--space-3);
+  }
+}
+
+@media (max-width: 576px) {
+  .div2 h4 {
+    font-size: 16px;
+  }
+
+  .div5 {
+    margin: var(--space-1);
+    padding: var(--space-2);
+  }
+}

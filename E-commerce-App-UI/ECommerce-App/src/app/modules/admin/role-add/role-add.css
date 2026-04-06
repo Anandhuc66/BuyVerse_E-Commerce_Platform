@@ -1,0 +1,72 @@
+.main-container {
+  padding: var(--space-4);
+  background-color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+}
+.main-container::-webkit-scrollbar { width: 5px; }
+.main-container::-webkit-scrollbar-track { background: transparent; }
+.main-container::-webkit-scrollbar-thumb { background-color: rgba(0,0,0,0.08); border-radius: 10px; }
+.main-container::-webkit-scrollbar-thumb:hover { background-color: rgba(0,0,0,0.15); }
+.main-container { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.08) transparent; }
+
+.add-product-container {
+  background: #F8FAFC;
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-8);
+  max-width: 800px;
+  margin: 0 auto;
+  border: 1px solid #E2E8F0;
+}
+
+h3 {
+  text-align: center;
+  margin-bottom: var(--space-5);
+  font-weight: 600;
+  color: #0F172A;
+  font-size: 1.15rem;
+  letter-spacing: 0.3px;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #64748B;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+input, select, textarea {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  font-size: 0.85rem;
+  color: #0F172A;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+input::placeholder, textarea::placeholder { color: #94A3B8; }
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--button);
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+  background: #FFFFFF;
+}
+select option { background: #FFFFFF; color: #0F172A; }
+
+.add-button {
+  background: var(--button);
+  color: #fff;
+  border: none;
+  padding: var(--space-2) var(--space-6);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.add-button:hover { background: var(--button-hover); }

@@ -1,0 +1,201 @@
+<div class="dashboard-container">
+
+  <!-- Loading spinner -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <ng-container *ngIf="!isLoading">
+
+  <!-- ===== DATE RANGE FILTER ===== -->
+  <div class="date-range-bar">
+    <div class="date-range-label"><i class="bi bi-funnel"></i> Filter by Date</div>
+    <div class="date-range-inputs">
+      <div class="date-input-group">
+        <label>From</label>
+        <input type="date" [(ngModel)]="startDate" (change)="onDateRangeChange()" />
+      </div>
+      <div class="date-input-group">
+        <label>To</label>
+        <input type="date" [(ngModel)]="endDate" (change)="onDateRangeChange()" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ROW 1: STATS CARDS ===== -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-top">
+        <span class="stat-label">My Revenue</span>
+        <div class="stat-icon revenue-icon"><i class="bi bi-currency-rupee"></i></div>
+      </div>
+      <span class="stat-value">&#8377;{{ totalRevenue | number:'1.0-0' }}</span>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-top">
+        <span class="stat-label">Total Orders</span>
+        <div class="stat-icon orders-icon"><i class="bi bi-cart-check"></i></div>
+      </div>
+      <span class="stat-value">{{ totalOrders | number }}</span>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-top">
+        <span class="stat-label">My Products</span>
+        <div class="stat-icon products-icon"><i class="bi bi-box-seam"></i></div>
+      </div>
+      <span class="stat-value">{{ totalProducts | number }}</span>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-top">
+        <span class="stat-label">Units Sold</span>
+        <div class="stat-icon sold-icon"><i class="bi bi-bag-check"></i></div>
+      </div>
+      <span class="stat-value">{{ totalUnitsSold | number }}</span>
+    </div>
+  </div>
+
+  <!-- ===== ROW 2: REVENUE CHART + DELIVERY STATUS ===== -->
+  <div class="chart-row">
+    <!-- Revenue Analytics (line chart) -->
+    <div class="card revenue-card">
+      <div class="card-header-row">
+        <h3 class="card-title">Revenue Analytics</h3>
+        <span class="card-badge">Daily Trend</span>
+      </div>
+      <div class="chart-container">
+        <canvas baseChart
+          [data]="revenueChartData"
+          [options]="revenueChartOptions"
+          type="line">
+        </canvas>
+      </div>
+    </div>
+
+    <!-- Delivery Status (doughnut) -->
+    <div class="card order-status-card">
+      <div class="card-header-row">
+        <h3 class="card-title">Delivery Status</h3>
+      </div>
+      <div class="doughnut-wrapper">
+        <div class="doughnut-chart-wrap">
+          <canvas baseChart
+            [data]="deliveryDoughnutData"
+            [options]="deliveryDoughnutOptions"
+            type="doughnut">
+          </canvas>
+          <div class="doughnut-center">
+            <span class="doughnut-pct">{{ getOrderPercentage(deliveredOrders) }}%</span>
+            <span class="doughnut-sub">Delivered</span>
+          </div>
+        </div>
+        <div class="status-legend">
+          <div class="status-row">
+            <span class="status-dot" style="background:#ffb74d"></span>
+            <span class="status-name">Pending</span>
+            <span class="status-count">{{ pendingDelivery }}</span>
+          </div>
+          <div class="status-row">
+            <span class="status-dot" style="background:#ff9800"></span>
+            <span class="status-name">Processing</span>
+            <span class="status-count">{{ processingOrders }}</span>
+          </div>
+          <div class="status-row">
+            <span class="status-dot" style="background:#42a5f5"></span>
+            <span class="status-name">Shipped</span>
+            <span class="status-count">{{ shippedOrders }}</span>
+          </div>
+          <div class="status-row">
+            <span class="status-dot" style="background:#66bb6a"></span>
+            <span class="status-name">Delivered</span>
+            <span class="status-count">{{ deliveredOrders }}</span>
+          </div>
+          <div class="status-row">
+            <span class="status-dot" style="background:#ef5350"></span>
+            <span class="status-name">Cancelled</span>
+            <span class="status-count">{{ cancelledOrders }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ROW 3: TOP PRODUCTS + RECENT ORDERS ===== -->
+  <div class="bottom-row">
+    <!-- Top Selling Products -->
+    <div class="card top-products-card">
+      <h3 class="card-title">Top Selling Products</h3>
+      <div *ngIf="topProducts.length === 0" class="empty-state">
+        <i class="bi bi-inbox"></i>
+        <p>No sales data yet</p>
+      </div>
+      <div class="top-product-list">
+        <div class="top-product-row" *ngFor="let product of topProducts; let i = index">
+          <span class="rank">#{{ i + 1 }}</span>
+          <div class="product-thumb" *ngIf="product.image">
+            <img [src]="product.image" alt="">
+          </div>
+          <div class="product-thumb placeholder-thumb" *ngIf="!product.image">
+            <i class="bi bi-image"></i>
+          </div>
+          <div class="product-detail">
+            <span class="product-name">{{ product.name }}</span>
+            <span class="product-meta">&#8377;{{ product.price | number:'1.0-0' }}</span>
+          </div>
+          <div class="sold-info">
+            <span class="sold-count">{{ product.sold }}</span>
+            <span class="sold-label">sold</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Orders -->
+    <div class="card recent-orders-card">
+      <div class="card-header-row">
+        <h3 class="card-title">Recent Orders</h3>
+        <a routerLink="/supplier/orders" class="see-all-link">See All</a>
+      </div>
+      <div *ngIf="recentOrders.length === 0" class="empty-state">
+        <i class="bi bi-receipt"></i>
+        <p>No orders yet</p>
+      </div>
+      <div class="table-wrapper" *ngIf="recentOrders.length > 0">
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th>Order #</th>
+              <th>Date</th>
+              <th>Items</th>
+              <th>Revenue</th>
+              <th>Payment</th>
+              <th>Delivery</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of recentOrders">
+              <td class="order-id">{{ order.orderNumber }}</td>
+              <td>{{ order.orderDate | date:'dd MMM yyyy' }}</td>
+              <td>{{ order.products?.length || 0 }}</td>
+              <td class="order-total">&#8377;{{ getOrderRevenue(order) | number:'1.0-0' }}</td>
+              <td>
+                <span class="status-badge" [ngClass]="getPaymentStatusClass(order.status)">
+                  {{ order.status }}
+                </span>
+              </td>
+              <td>
+                <span class="status-badge" [ngClass]="getDeliveryStatusClass(order.deliveryStatus)">
+                  {{ order.deliveryStatus }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  </ng-container>
+</div>

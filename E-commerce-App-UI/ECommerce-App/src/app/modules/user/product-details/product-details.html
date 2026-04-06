@@ -1,0 +1,182 @@
+<!-- Skeleton Loading -->
+<div *ngIf="loading" class="product-page">
+  <div class="product-layout">
+    <aside class="gallery-col">
+      <div class="gallery-inner">
+        <div class="thumbnail-column">
+          <div class="skeleton" style="width:60px;height:60px;border-radius:8px;margin-bottom:8px;" *ngFor="let i of [1,2,3,4]"></div>
+        </div>
+        <div class="main-image-box">
+          <div class="skeleton" style="width:100%;height:100%;border-radius:12px;"></div>
+        </div>
+      </div>
+    </aside>
+    <section class="info-col">
+      <div class="info-inner">
+        <div class="skeleton skeleton-text" style="width:75%;height:24px;margin-bottom:12px;"></div>
+        <div class="skeleton skeleton-text" style="width:30%;height:14px;margin-bottom:8px;"></div>
+        <div class="skeleton skeleton-text" style="width:20%;height:14px;margin-bottom:16px;"></div>
+        <div class="skeleton" style="width:120px;height:32px;margin-bottom:24px;"></div>
+        <div class="skeleton skeleton-text" style="width:100%;height:14px;margin-bottom:6px;"></div>
+        <div class="skeleton skeleton-text" style="width:90%;height:14px;margin-bottom:6px;"></div>
+        <div class="skeleton skeleton-text" style="width:60%;height:14px;margin-bottom:24px;"></div>
+        <div style="display:flex;gap:12px;">
+          <div class="skeleton" style="width:120px;height:40px;border-radius:8px;"></div>
+          <div class="skeleton" style="width:140px;height:40px;border-radius:8px;"></div>
+          <div class="skeleton" style="width:100px;height:40px;border-radius:8px;"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- product-details.html (replace your current template) -->
+<div *ngIf="!loading && product" class="product-page">
+
+  <!-- 2-col layout: left sticky gallery, right scrollable content -->
+  <div class="product-layout">
+
+    <!-- LEFT: Gallery (sticky) -->
+    <aside class="gallery-col">
+      <div class="gallery-inner">
+        <!-- vertical thumbnails -->
+        <div class="thumbnail-column">
+          <img
+            *ngFor="let img of product.images; trackBy: trackByImage"
+            [src]="img"
+            (click)="changeImage(img)"
+            class="thumb"
+            [ngClass]="{'thumb-active': selectedImage === img}"
+            alt="thumb"
+          />
+        </div>
+
+        <!-- main image -->
+        <div class="main-image-box">
+          <img
+            [src]="selectedImage"
+            [alt]="product.title"
+            class="main-image"
+          >
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- RIGHT: Product details + reviews (scroll area) -->
+    <section class="info-col">
+      <div class="info-inner">
+
+        <!-- Product header -->
+        <header class="product-header">
+          <h1 class="product-title">{{ product.title }}</h1>
+          <p class="text-muted small mb-1">{{ product.category }}</p>
+
+          <div class="d-flex align-items-center gap-2 text-warning mb-2">
+            <span>⭐</span> <span>{{ product.rating }}</span>
+          </div>
+
+          <div class="price mb-3">₹{{ product.price | number }}</div>
+        </header>
+
+        <!-- Description -->
+        <div class="mb-4">
+          <p class="text-muted product-desc">{{ product.description }}</p>
+        </div>
+
+        <!-- Quantity & CTA -->
+        <div class="d-flex flex-wrap gap-3 mb-4 align-items-center">
+          <div class="input-group qty-group" style="width: auto;">
+            <button class="btn btn-outline-secondary" type="button" (click)="decrementQty()" [disabled]="quantity <= 1">−</button>
+            <input type="text" class="form-control text-center qty-input" [value]="quantity" readonly />
+            <button class="btn btn-outline-secondary" type="button" (click)="incrementQty()">+</button>
+          </div>
+
+          <button class="btn btn-primary btn-action" (click)="addToCart()"><i class="bi bi-cart3"></i> Add to Cart</button>
+          <button class="btn btn-warning btn-action" (click)="BuyNow()">Buy Now</button>
+        </div>
+
+        <!-- Delivery info -->
+        <div class="border-top pt-3 mb-4 text-muted small">
+          <div>🚚 Free shipping on orders above ₹999</div>
+          <div>↩️ 7-day easy returns</div>
+        </div>
+
+        <!-- Ratings & Reviews -->
+        <div class="reviews-panel">
+          <div class="d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Ratings & Reviews</h4>
+            <button class="btn btn-outline-secondary btn-sm" (click)="showReviewForm = !showReviewForm">Rate Product</button>
+          </div>
+
+          <div class="rating-summary d-flex align-items-center gap-4 mt-3">
+            <div class="rating-number">
+              <h1 class="display-5 mb-0">{{ avgRating || 0 }} ★</h1>
+              <div class="text-muted small">{{ totalRatings || 0 }} Ratings • {{ reviews.length || 0 }} Reviews</div>
+            </div>
+            <div class="rating-bars flex-grow-1">
+              <div *ngFor="let r of [5,4,3,2,1]" class="d-flex align-items-center mb-1">
+                <span class="me-2 small">{{ r }}★</span>
+                <div class="progress flex-grow-1" style="height:6px;">
+                  <div class="progress-bar bg-warning" role="progressbar" [style.width.%]="getRatingPercent(r)"></div>
+                </div>
+                <span class="ms-2 small">{{ getRatingCount(r) }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review form -->
+          <div *ngIf="showReviewForm" class="review-box mt-4 p-3 rounded bg-white shadow-sm">
+            <h5 class="mb-3">Write a Review</h5>
+            <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+              <div class="mb-2 star-rating">
+                <i *ngFor="let s of [1,2,3,4,5]" class="bi"
+                   [ngClass]="reviewForm.value.rating >= s ? 'bi-star-fill text-warning' : 'bi-star'"
+                   (click)="reviewForm.patchValue({ rating: s })"
+                   style="font-size: 1.4rem; cursor: pointer;"></i>
+              </div>
+              <input formControlName="title" type="text" placeholder="Review Title" class="form-control mb-2" />
+              <textarea formControlName="comment" rows="3" placeholder="Write your experience..." class="form-control mb-2"></textarea>
+              <button class="btn btn-warning" [disabled]="reviewForm.invalid">Submit Review</button>
+            </form>
+          </div>
+
+          <!-- Review list -->
+          <div class="mt-3">
+            <div *ngIf="reviews.length === 0" class="text-muted small">No reviews yet.</div>
+            <div *ngFor="let r of reviews" class="p-3 border-bottom review-item">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="badge bg-warning text-dark">⭐ {{ r.rating }}</span>
+                <strong>{{ r.title }}</strong>
+              </div>
+              <div class="text-muted">{{ r.comment }}</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.info-inner -->
+    </section>
+
+  </div><!-- /.product-layout -->
+
+  <!-- SIMILAR PRODUCTS: full width below -->
+  <div class="similar-products container-fluid mt-5">
+    <div class="container">
+      <h2 class="h5 fw-semibold mb-4">Similar Products</h2>
+      <div class="similar-grid">
+        <div class="similar-card" *ngFor="let p of similarProducts" (click)="goToProduct(p.id)">
+          <div class="similar-card-image">
+            <img [src]="p.image" [alt]="p.title" />
+          </div>
+          <div class="similar-card-body">
+            <h6 class="similar-card-title">{{ p.title }}</h6>
+            <p class="similar-card-category">{{ p.category }}</p>
+            <div class="similar-card-rating">⭐ {{ p.rating }}</div>
+            <div class="similar-card-price">₹{{ p.price | number }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

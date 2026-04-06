@@ -1,0 +1,32 @@
+<div class="login-wrapper">
+  <div class="login-left">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <h2>Welcome Back</h2>
+
+      <input formControlName="email" placeholder="Email or Username" type="text" />
+      <div class="password-wrapper">
+        <input formControlName="password" placeholder="Password" [type]="showPassword ? 'text' : 'password'" />
+        <button type="button" class="toggle-password-btn" (click)="showPassword = !showPassword" aria-label="Toggle password visibility">
+          <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+        </button>
+      </div>
+
+      <button type="submit" [disabled]="loginForm.invalid">Login</button>
+
+      <a href="#" class="forgot-link">Forgot Password?</a>
+
+      <p class="forgot-link">Don't have an account? <a routerLink="/register">Register</a></p>
+
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    </form>
+  </div>
+
+  <div class="login-right">
+    <h2 class="title">BuyVerse</h2>
+    <p>
+      Discover the ultimate shopping experience with BuyVerse — your one-stop destination for electronics, fashion, and home essentials.
+      Enjoy unbeatable prices, fast delivery, and top-quality products from trusted brands.
+    </p>
+    <button class="website-btn" routerLink="/">Shop Now</button>
+  </div>
+</div>

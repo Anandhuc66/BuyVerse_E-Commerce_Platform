@@ -1,0 +1,212 @@
+/* ================================
+   PROFILE PAGE — Professional Redesign
+   ================================ */
+
+.profile-container {
+  max-width: 800px;
+  margin: var(--space-6) auto;
+  padding: 0 var(--space-5);
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* ---- Header ---- */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  background: linear-gradient(135deg, var(--button) 0%, var(--button-hover) 100%);
+  border-radius: var(--radius-xl);
+  color: var(--white);
+  margin-bottom: var(--space-5);
+}
+
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border: 3px solid rgba(255, 255, 255, 0.35);
+  flex-shrink: 0;
+}
+
+.header-info h2 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.header-info p {
+  opacity: 0.85;
+  font-size: 0.85rem;
+}
+
+.badge.bg-teal {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: var(--white);
+  font-weight: 500;
+  font-size: 0.75rem;
+  padding: 4px 14px;
+  border-radius: 20px;
+}
+
+/* ---- Tabs ---- */
+.profile-tabs {
+  display: flex;
+  gap: 4px;
+  background: #f0f1f3;
+  padding: 4px;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-5);
+}
+
+.profile-tabs button {
+  flex: 1;
+  padding: var(--space-2) var(--space-3);
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--secondary-text);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.profile-tabs button.active {
+  background: var(--white);
+  color: var(--button);
+  box-shadow: var(--shadow-sm);
+  font-weight: 600;
+}
+
+.profile-tabs button:hover:not(.active) {
+  color: var(--primary-text);
+}
+
+/* ---- Info Card ---- */
+.info-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-card);
+}
+
+.section-title {
+  font-weight: 700;
+  color: var(--primary-text);
+  font-size: 1rem;
+}
+
+/* ---- Info Grid ---- */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-item label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--secondary-text);
+  font-weight: 600;
+}
+
+.info-item span {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--primary-text);
+}
+
+/* ---- Address Card ---- */
+.address-card {
+  padding: var(--space-3) var(--space-4);
+  background: var(--main-background-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-2);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.address-card:hover {
+  border-color: var(--button);
+  background: var(--primary-50);
+}
+
+.text-teal {
+  color: var(--button) !important;
+}
+
+/* ---- Buttons ---- */
+.btn-teal {
+  background: var(--button);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-teal:hover {
+  background: var(--button-hover);
+  color: var(--white);
+}
+
+/* ---- Form Inputs ---- */
+.address-form .form-control,
+.info-card .form-control {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  font-size: 0.88rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.address-form .form-control:focus,
+.info-card .form-control:focus {
+  border-color: var(--button);
+  box-shadow: 0 0 0 3px var(--primary-100);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 600px) {
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+    padding: var(--space-5) var(--space-4);
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-tabs {
+    flex-direction: column;
+  }
+
+  .profile-tabs button {
+    text-align: center;
+  }
+
+  .profile-container {
+    padding: 0 var(--space-3);
+  }
+}

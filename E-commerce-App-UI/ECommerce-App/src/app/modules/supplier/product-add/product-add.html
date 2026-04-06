@@ -1,0 +1,111 @@
+<div class="main-container">
+  <div class="add-product-container container">
+    <h2 class="mb-4 text-center">{{ isEditMode ? 'Edit Product' : 'Add New Product' }}</h2>
+
+    <form
+      [formGroup]="productForm"
+      (ngSubmit)="onSubmit()"
+      enctype="multipart/form-data"
+      class="row g-3"
+    >
+      <!-- Row 1 -->
+       <div class="row">
+        <div class="col">
+        <label>Product Name</label>
+        <input type="text" class="form-control" formControlName="name" />
+      </div>
+
+      <div class="col">
+        <label>Price</label>
+        <input type="number" class="form-control" formControlName="price" />
+      </div>
+       </div>
+      
+
+      <!-- Row 2 -->
+       <div class="row">
+        <div class="col">
+        <label>Stock Quantity</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="stockQuantity"
+        />
+      </div>
+
+      <div class="col">
+        <label>SKU</label>
+        <input type="text" class="form-control" formControlName="sku" />
+      </div>
+       </div>
+      
+
+      <!-- Row 3 -->
+       <div class="row">
+        <div class="col">
+        <label>Category</label>
+        <select class="form-select" formControlName="categoryId">
+          <option value="" disabled selected>Select Category</option>
+          <option *ngFor="let c of categories" [value]="c.id">
+            {{ c.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col">
+        <label>Supplier ID</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="supplierId"
+          readonly
+        />
+      </div>
+       </div>
+      
+
+      <!-- Description - full row -->
+      <div class="col-12">
+        <label>Description</label>
+        <textarea
+          class="form-control"
+          formControlName="description"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <!-- Upload Images - full row -->
+      <div class="col-12">
+        <label>Upload Images</label>
+        <input
+          type="file"
+          class="form-control"
+          (change)="onFileSelected($event)"
+          multiple
+          accept="image/*"
+        />
+      </div>
+
+      <!-- Image preview grid -->
+      <div class="col-12">
+        <div class="image-preview d-flex flex-wrap gap-3 mt-3">
+          <div class="image-box position-relative" *ngFor="let img of selectedImages; let i = index">
+            <img [src]="img" alt="Preview" class="img-thumbnail" style="width: 120px; height: 120px; object-fit: cover;" />
+            <button
+              type="button"
+              class="btn btn-sm btn-danger position-absolute top-0 end-0"
+              (click)="removeImage(i)"
+            >
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit button -->
+      <div class="col-12 text-center mt-3">
+        <button type="submit" class="btn btn-primary add-button px-4">{{ isEditMode ? 'Update Product' : 'Add Product' }}</button>
+      </div>
+    </form>
+  </div>
+</div>

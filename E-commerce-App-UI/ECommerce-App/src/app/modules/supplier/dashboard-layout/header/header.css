@@ -1,0 +1,56 @@
+.header {
+  width: 99%;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px 10px 8px;
+  border-radius: var(--radius-lg);
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  margin-left: 0.5%;
+  z-index: 100;
+}
+
+/* toggle button */
+.toggle-btn {
+  background-color: var(--button) !important;
+  color: #fff;
+  border: none;
+  font-size: 22px;
+  padding: 6px 10px;
+  border-radius: var(--radius-md);
+  transition: background 0.2s ease;
+}
+
+.toggle-btn:hover {
+  background-color: var(--button-hover);
+}
+
+/* title styling */
+.dashboard-title {
+  color: #0F172A;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0;
+  text-align: center;
+  flex-grow: 1;
+}
+
+/* user icon */
+.user-info i {
+  font-size: 28px;
+  color: #64748B;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.user-info i:hover { color: #fff; }
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+  .dashboard-title { font-size: 0.95rem; }
+  .toggle-btn { font-size: 18px; padding: 5px 8px; }
+  .user-info i { font-size: 24px; }
+}

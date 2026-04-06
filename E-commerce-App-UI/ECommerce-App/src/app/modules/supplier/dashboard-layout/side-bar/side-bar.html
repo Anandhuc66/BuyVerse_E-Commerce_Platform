@@ -1,0 +1,68 @@
+<div class="main-container">
+
+  <nav class="sidebar" [class.collapsed]="isCollapsed">
+    <div class="profile-container">
+      <div class="user-info">
+        <i class="bi bi-person-circle"></i>
+      </div>
+      <div class="admin-data">
+        <h5>Supplier Name</h5>
+        <p>example.com</p>
+      </div>
+    </div>
+
+    <div class="section-label">MAIN</div>
+
+    <ul class="menu">
+      <!-- Dashboard -->
+      <li routerLink="/supplier/dashboard" routerLinkActive="active">
+        <i class="bi bi-house"></i><span class="menu-text">Dashboard</span>
+      </li>
+
+
+      <!-- Products Dropdown -->
+      <li (click)="toggleDropdown('products')" (keydown.enter)="toggleDropdown('products')" class="menu-item">
+        <i class="bi bi-box"></i>
+        <span class="menu-text">Products Management</span>
+        <i
+          class="bi chevron"
+          [ngClass]="{
+            'bi-chevron-down': isDropdownOpen('products'),
+            'bi-chevron-right': !isDropdownOpen('products')
+          }"
+          *ngIf="!isCollapsed"
+        ></i>
+      </li>
+
+      <ul class="dropdown" [class.dropdown-open]="isDropdownOpen('products')">
+        <li routerLink="/supplier/product-add" routerLinkActive="active">Add Product</li>
+        <li routerLink="/supplier/products" routerLinkActive="active">Products</li>
+      </ul>
+
+
+      <!-- Orders -->
+      <li (click)="toggleDropdown('orders')" (keydown.enter)="toggleDropdown('orders')" class="menu-item">
+        <i class="bi bi-person-gear"></i>
+        <span class="menu-text">Order Management</span>
+        <i
+          class="bi chevron"
+          [ngClass]="{
+            'bi-chevron-down': isDropdownOpen('orders'),
+            'bi-chevron-right': !isDropdownOpen('orders')
+          }"
+          *ngIf="!isCollapsed"
+        ></i>
+      </li>
+
+      <ul class="dropdown" [class.dropdown-open]="isDropdownOpen('orders')">
+        <li routerLink="/supplier/orders" routerLinkActive="active">Orders</li>
+      </ul>
+      <!-- Settings -->
+      <li routerLink="/supplier/settings" routerLinkActive="active" class="menu-item">
+        <i class="bi bi-gear"></i>
+        <span class="menu-text">Settings</span>
+      </li>
+
+    </ul>
+  </nav>
+</div>

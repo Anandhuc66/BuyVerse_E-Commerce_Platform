@@ -1,0 +1,158 @@
+/* ==============================
+   Supplier Registration Form
+   ============================== */
+.main-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F1F5F9 0%, #FFFFFF 50%, #F1F5F9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+}
+
+.register-container,
+.password-container {
+  background: #FFFFFF;
+  padding: var(--space-8) var(--space-8);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  margin: 0 auto;
+  max-width: 720px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.password-container {
+  max-width: 480px !important;
+}
+
+.register-container h2,
+.password-container h2 {
+  text-align: center;
+  color: var(--button);
+  margin-bottom: var(--space-6);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #64748B;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.form-group input,
+.form-group select {
+  padding: var(--space-2) var(--space-3);
+  border: 1.5px solid #E2E8F0;
+  width: 100%;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+  background: #F8FAFC;
+  color: #0F172A;
+}
+.form-group input::placeholder { color: #94A3B8; }
+
+.form-group select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23999' height='14' width='14' xmlns='http://www.w3.org/2000/svg'><path d='M2 5l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px;
+  background-color: #F8FAFC;
+}
+.form-group select option { background: #F8FAFC; color: #0F172A; }
+
+.form-group select:valid {
+  color: #0F172A !important;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--button);
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+}
+
+/* Password Section */
+.password-container .form-row {
+  flex-direction: column;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .main-container { padding: var(--space-4) var(--space-3); }
+  .register-container, .password-container { padding: var(--space-5) var(--space-4); }
+  .form-row { flex-direction: column; gap: var(--space-2); }
+}
+
+/* Form Buttons */
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  flex-wrap: wrap;
+}
+
+/* Cancel / Back Button */
+.btn-cancel {
+  background-color: #E2E8F0;
+  color: #0F172A;
+  border: none;
+  padding: 12px 36px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+  flex: 0 0 auto;
+}
+.btn-cancel:hover {
+  background-color: #CBD5E1;
+}
+
+/* Continue / Register Button */
+.btn-register {
+  background-color: var(--button);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  padding: 12px 36px;
+  flex: 0 0 auto;
+}
+.btn-register:hover:not(:disabled) {
+  background-color: var(--button-hover);
+}
+.btn-register:disabled {
+  background-color: #E2E8F0;
+  color: #94A3B8;
+  cursor: not-allowed;
+}
+
+.option-clr {
+  color: #94A3B8 !important;
+}

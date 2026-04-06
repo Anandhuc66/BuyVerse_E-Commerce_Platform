@@ -1,0 +1,31 @@
+<div class="main-container">
+    <div class="add-product-container container">
+        <h3 class="mb-4 text-center">{{ isEditMode ? 'Edit Category' : 'Add New Category' }}</h3>
+        <form
+        [formGroup]="categoryForm"
+        (ngSubmit)="onSubmit()"
+        enctype="multipart/form-data"
+        class="row g-3"
+        >
+                <!-- Row 1 -->
+            <div class="col-12">
+                <label>Category Name</label>
+                <input type="text" class="form-control" formControlName="name" />
+            </div>
+
+            <!-- Row 2 -->
+            <div class="col-12">
+                <label>Description</label>
+                <textarea
+                class="form-control"
+                formControlName="description"
+                rows="3"
+                ></textarea>
+
+            </div>
+            <div class="col-12 text-center mt-3">
+                <button type="submit" class="btn btn-primary add-button px-4">{{ isEditMode ? 'Update Category' : 'Add Category' }}</button>
+            </div>
+        </form>
+    </div>
+</div>

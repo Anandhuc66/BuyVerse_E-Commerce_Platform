@@ -1,0 +1,70 @@
+<div class="login-wrapper">
+
+  <!-- STEP 1: Personal Info -->
+  <div class="login-left" *ngIf="!showPasswordStep">
+    <form [formGroup]="infoForm">
+      <h2>Create Account</h2>
+
+      <input formControlName="fullName" placeholder="Full Name" type="text" />
+      <div *ngIf="infoForm.get('fullName')?.touched && infoForm.get('fullName')?.invalid" class="error">
+        Full name is required
+      </div>
+
+      <select formControlName="gender">
+        <option value="" disabled selected>Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <input formControlName="email" placeholder="Email" type="email" />
+      <div *ngIf="infoForm.get('email')?.touched && infoForm.get('email')?.invalid" class="error">
+        Valid email is required
+      </div>
+
+      <input formControlName="phoneNumber" placeholder="Phone Number" type="text" />
+      <div *ngIf="infoForm.get('phoneNumber')?.touched && infoForm.get('phoneNumber')?.invalid" class="error">
+        10-digit phone number is required
+      </div>
+
+      <button type="button" (click)="goToPassword()" [disabled]="infoForm.invalid">
+        Continue
+      </button>
+
+      <p class="forgot-link">Already have an account? <a routerLink="/login">Login</a></p>
+    </form>
+  </div>
+
+  <!-- STEP 2: Password -->
+  <div class="login-left" *ngIf="showPasswordStep" @slideIn>
+    <form [formGroup]="passwordForm" (ngSubmit)="onSubmit()">
+      <h2>Create Password</h2>
+
+      <input formControlName="password" placeholder="Password" type="password" />
+      <div *ngIf="passwordForm.get('password')?.touched && passwordForm.get('password')?.invalid" class="error">
+        Password must be at least 6 characters
+      </div>
+
+      <input formControlName="confirmPassword" placeholder="Confirm Password" type="password" />
+
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+
+      <div class="step-buttons">
+        <button type="button" class="btn-back" (click)="backToInfo()">Back</button>
+        <button type="submit" [disabled]="passwordForm.invalid || loading">
+          {{ loading ? 'Registering...' : 'Register' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="login-right">
+    <h2 class="title">BuyVerse</h2>
+    <p>
+      Join BuyVerse today and unlock exclusive deals, fast delivery, and a curated selection of top-quality products.
+    </p>
+    <button class="website-btn" routerLink="/login">Login Instead</button>
+  </div>
+</div>

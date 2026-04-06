@@ -1,0 +1,208 @@
+/* ================================
+   LOGIN PAGE — Professional Redesign
+   ================================ */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideFromRightBehind {
+  0% {
+    transform: translateX(300px) scale(0.98);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Wrapper */
+.login-wrapper {
+  display: flex;
+  max-width: 880px;
+  margin: 0 auto;
+  margin-top: 8%;
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  animation: fadeIn 0.5s ease-in;
+}
+
+/* Left - Form */
+.login-left {
+  flex: 1;
+  padding: var(--space-8) var(--space-7);
+  background-color: var(--white);
+  position: relative;
+  z-index: 1;
+  animation: slideFromRightBehind 0.8s ease-out forwards;
+}
+
+.login-left h2 {
+  margin-bottom: var(--space-5);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--primary-text);
+}
+
+.login-left input {
+  display: block;
+  width: 100%;
+  padding: var(--space-3);
+  margin-bottom: var(--space-3);
+  color: var(--primary-text);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background: var(--white);
+}
+
+.login-left input:focus {
+  border-color: var(--button);
+  box-shadow: 0 0 0 3px var(--primary-100);
+}
+
+.login-left input::placeholder {
+  color: var(--secondary-text);
+  opacity: 0.7;
+}
+
+.password-wrapper {
+  position: relative;
+  margin-bottom: var(--space-3);
+}
+.password-wrapper input {
+  margin-bottom: 0 !important;
+  padding-right: 42px;
+}
+.password-wrapper .toggle-password-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--secondary-text);
+  font-size: 1.1rem;
+  transition: color 0.2s;
+  line-height: 1;
+}
+.password-wrapper .toggle-password-btn:hover {
+  color: var(--button);
+}
+
+.login-left button[type="submit"] {
+  width: 100%;
+  padding: var(--space-3);
+  background-color: var(--button);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-top: var(--space-2);
+}
+.login-left button[type="submit"]:hover {
+  background-color: var(--button-hover);
+}
+.login-left button[type="submit"]:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.forgot-link {
+  display: inline-block;
+  margin-top: var(--space-3);
+  color: var(--secondary-text);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+.forgot-link a {
+  color: var(--button);
+  font-weight: 600;
+  text-decoration: none;
+}
+.forgot-link a:hover { text-decoration: underline; }
+
+.error {
+  color: #d32f2f;
+  font-size: 0.82rem;
+  margin-top: var(--space-2);
+}
+
+/* Right - Brand Panel */
+.login-right {
+  flex: 1;
+  padding: var(--space-8) var(--space-6);
+  background: linear-gradient(135deg, var(--button) 0%, var(--button-hover) 100%);
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  position: relative;
+  z-index: 2;
+}
+
+.login-right .title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+}
+
+.login-right p {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  text-align: center;
+  margin-bottom: var(--space-5);
+  max-width: 300px;
+  color: var(--white);
+  opacity: 0.9;
+}
+
+.website-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  padding: var(--space-2) var(--space-5);
+  border-radius: 28px;
+  color: var(--white);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.website-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .login-wrapper {
+    flex-direction: column;
+    border-radius: var(--radius-lg);
+    margin: var(--space-5) var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  .login-left {
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .login-right {
+    border-radius: 0;
+    border-top-left-radius: 60px;
+    padding: var(--space-6) var(--space-5);
+  }
+}

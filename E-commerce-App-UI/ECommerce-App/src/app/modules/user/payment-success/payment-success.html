@@ -1,0 +1,38 @@
+<div class="result-page">
+  <div class="result-card">
+
+    <div class="result-icon success-icon">
+      <i class="bi bi-check-circle-fill"></i>
+    </div>
+
+    <h2 class="result-title">Payment Successful!</h2>
+    <p class="result-subtitle">Thank you for your purchase. Your order has been placed successfully.</p>
+
+    <div class="order-summary-card">
+      <div class="summary-row">
+        <span>Order Number</span>
+        <span class="summary-value">{{ orderNumber }}</span>
+      </div>
+      <div class="summary-row">
+        <span>Amount Paid</span>
+        <span class="summary-value">₹{{ amount }}</span>
+      </div>
+      <div class="summary-row">
+        <span>Payment ID</span>
+        <span class="summary-value">{{ paymentId }}</span>
+      </div>
+      <div class="summary-row">
+        <span>Estimated Delivery</span>
+        <span class="summary-value">{{ estimatedDelivery }}</span>
+      </div>
+    </div>
+
+    <div class="result-actions">
+      <button class="action-primary" (click)="goToOrders()">View Order</button>
+      <button class="action-secondary" (click)="downloadInvoice()">
+        <i class="bi bi-download"></i> Download Invoice
+      </button>
+      <button class="action-outline" (click)="continueShopping()">Continue Shopping</button>
+    </div>
+  </div>
+</div>

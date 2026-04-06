@@ -1,0 +1,115 @@
+/* ============================================================
+   CATEGORY NAVIGATION BAR
+   ============================================================ */
+
+.category-bar {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1050;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
+
+.category-bar-inner {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.category-bar-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.category-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+  white-space: nowrap;
+}
+
+.category-item {
+  position: relative;
+  z-index: 1;
+}
+
+.category-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--primary-text);
+  text-decoration: none;
+  transition: color var(--transition-fast), background var(--transition-fast);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+.category-link:hover {
+  color: var(--button);
+  background: var(--primary-50);
+  border-bottom-color: var(--button);
+}
+
+.cat-chevron {
+  font-size: 10px;
+  color: var(--tertiary-text);
+  transition: transform var(--transition-fast);
+}
+
+.category-item:hover .cat-chevron {
+  transform: rotate(180deg);
+  color: var(--button);
+}
+
+/* Dropdown */
+.category-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 6px 0;
+  z-index: 2000;
+  animation: slideDown 0.15s ease;
+}
+
+.category-dropdown-item {
+  display: block;
+  padding: 10px 18px;
+  font-size: 13px;
+  color: var(--primary-text);
+  text-decoration: none;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  cursor: pointer;
+}
+
+.category-dropdown-item:hover {
+  background: var(--primary-50);
+  color: var(--button);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .category-bar {
+    top: 64px;
+  }
+  .category-link {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+}

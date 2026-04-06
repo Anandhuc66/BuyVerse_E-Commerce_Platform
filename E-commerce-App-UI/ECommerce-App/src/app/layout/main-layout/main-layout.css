@@ -1,0 +1,5 @@
+.main-content {
+  padding-top: 108px; /* 64px header + 44px cat-navbar */
+  background-color: var(--main-background-color);
+  min-height: 100vh;
+}

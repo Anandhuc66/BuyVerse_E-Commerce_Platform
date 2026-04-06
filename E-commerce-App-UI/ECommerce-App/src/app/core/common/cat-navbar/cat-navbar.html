@@ -1,0 +1,27 @@
+<nav class="category-bar">
+  <div class="category-bar-inner">
+    <ul class="category-list">
+      <li
+        *ngFor="let cat of categories; trackBy: trackByCategory"
+        class="category-item"
+        (mouseenter)="openDropdown(cat)"
+        (mouseleave)="closeDropdown()"
+      >
+        <a class="category-link" href="javascript:void(0)">
+          {{ cat.name }}
+          <i class="bi bi-chevron-down cat-chevron" *ngIf="cat.subcategories?.length"></i>
+        </a>
+
+        <div *ngIf="activeCategory === cat && cat.subcategories?.length" class="category-dropdown">
+          <a
+            *ngFor="let sub of cat.subcategories; trackBy: trackBySub"
+            class="category-dropdown-item"
+            (click)="navigateToSubCategory(sub.id)"
+          >
+            {{ sub.title }}
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

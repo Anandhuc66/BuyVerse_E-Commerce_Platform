@@ -1,0 +1,110 @@
+<div class="cart-page" [@cartStagger]>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-bar">
+    <a routerLink="/">Home</a>
+    <i class="bi bi-chevron-right"></i>
+    <span>Shopping Cart</span>
+  </nav>
+
+  <h1 class="cart-heading">Shopping Cart</h1>
+
+  <!-- Skeleton Loading -->
+  <div *ngIf="loading" class="cart-layout">
+    <div class="cart-items">
+      <div class="cart-item-card" *ngFor="let i of [1,2,3]">
+        <div class="item-image"><div class="skeleton" style="width:100%;height:100%;border-radius:8px;"></div></div>
+        <div class="item-details" style="flex:1;">
+          <div class="skeleton skeleton-text" style="width:60%;height:16px;"></div>
+          <div class="skeleton skeleton-text" style="width:30%;height:14px;margin-top:8px;"></div>
+        </div>
+        <div class="item-qty"><div class="skeleton" style="width:90px;height:32px;border-radius:6px;"></div></div>
+        <div class="item-subtotal"><div class="skeleton" style="width:70px;height:18px;"></div></div>
+      </div>
+    </div>
+    <div class="cart-summary">
+      <div class="summary-card">
+        <div class="skeleton skeleton-text" style="width:50%;height:18px;margin-bottom:16px;"></div>
+        <div class="skeleton skeleton-text" style="width:100%;height:14px;margin-bottom:8px;"></div>
+        <div class="skeleton skeleton-text" style="width:100%;height:14px;margin-bottom:8px;"></div>
+        <div class="skeleton" style="width:100%;height:44px;border-radius:8px;margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && cartItems.length > 0; else emptyCart" class="cart-layout">
+
+    <!-- Cart Items -->
+    <div class="cart-items">
+      <div class="cart-item-card" *ngFor="let item of cartItems; trackBy: trackByItem">
+        <div class="item-image">
+          <img [src]="item.image" [alt]="item.name">
+        </div>
+        <div class="item-details">
+          <h3 class="item-name">{{ item.name }}</h3>
+          <p class="item-price">₹{{ item.price | number }}</p>
+        </div>
+        <div class="item-qty">
+          <button class="qty-btn" (click)="decreaseQty(item)" [disabled]="item.quantity <= 1">−</button>
+          <span class="qty-value">{{ item.quantity }}</span>
+          <button class="qty-btn" (click)="increaseQty(item)" [disabled]="item.quantity >= 10">+</button>
+        </div>
+        <div class="item-subtotal">
+          <span class="subtotal-label">Subtotal</span>
+          <span class="subtotal-value">₹{{ item.price * item.quantity | number }}</span>
+        </div>
+        <button class="item-remove" (click)="removeItem(item.id)" title="Remove item">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="cart-summary">
+      <div class="summary-card">
+        <h4 class="summary-title">Order Summary</h4>
+
+        <div class="summary-row">
+          <span>Subtotal ({{ cartItems.length }} items)</span>
+          <span>₹{{ totalAmount | number }}</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Shipping</span>
+          <span class="free-shipping">FREE</span>
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-row summary-total">
+          <span>Total</span>
+          <span>₹{{ totalAmount | number }}</span>
+        </div>
+
+        <button class="checkout-btn" (click)="checkout()">
+          Proceed to Checkout
+        </button>
+
+        <a routerLink="/" class="continue-link">
+          <i class="bi bi-arrow-left"></i> Continue Shopping
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Empty State -->
+  <ng-template #emptyCart>
+    <div class="empty-cart" [@cartStagger]>
+      <div class="empty-icon">
+        <i class="bi bi-cart-x"></i>
+      </div>
+      <h3>Your cart is empty</h3>
+      <p>Looks like you haven't added anything to your cart yet.</p>
+      <a routerLink="/" class="checkout-btn" style="display:inline-block; text-decoration:none;">
+        Start Shopping
+      </a>
+    </div>
+  </ng-template>
+
+</div>

@@ -1,0 +1,106 @@
+<div class="main-container">
+  <div class="add-product-container container">
+    <h2 class="mb-4 text-center">{{ isEditMode ? 'Edit Product' : 'Add New Product' }}</h2>
+
+    <form
+      [formGroup]="productForm"
+      (ngSubmit)="onSubmit()"
+      enctype="multipart/form-data"
+      class="row g-3"
+    >
+
+      <!-- Row 1 -->
+      <div class="row">
+        <div class="col-12">
+          <label>Product Name</label>
+          <input type="text" class="form-control" formControlName="name" />
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="row">
+        <div class="col">
+          <label>Price</label>
+          <input type="number" class="form-control" formControlName="price" />
+        </div>
+
+        <div class="col">
+          <label>Stock Quantity</label>
+          <input type="number" class="form-control" formControlName="stockQuantity" />
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="row">
+        <div class="col">
+          <label>SKU</label>
+          <input type="text" class="form-control" formControlName="sku" />
+        </div>
+
+        <div class="col">
+          <label>Supplier</label>
+          <select class="form-select" formControlName="supplierId">
+            <option value="" disabled selected>Select Supplier</option>
+            <option *ngFor="let s of suppliers" [ngValue]="s.supplierId">
+              {{ s.companyName || s.fullName }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="row">
+        <div class="col">
+          <label>Category</label>
+          <select class="form-select" formControlName="categoryId" (change)="onCategoryChange($event)">
+            <option value="" disabled selected>Select Category</option>
+            <option *ngFor="let c of categories" [ngValue]="c.id">
+              {{ c.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col">
+          <label>Sub Category</label>
+          <select class="form-select" formControlName="subCategoryId">
+            <option value="" disabled selected>Select Sub Category</option>
+            <option *ngFor="let sc of subCategories" [ngValue]="sc.id">
+              {{ sc.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="col-12">
+        <label>Description</label>
+        <textarea class="form-control" formControlName="description" rows="3"></textarea>
+      </div>
+
+      <!-- Upload Images -->
+      <div class="col-12">
+        <label>Upload Images</label>
+        <input type="file" class="form-control" (change)="onFileSelected($event)" multiple accept="image/*" />
+      </div>
+
+      <!-- Preview -->
+      <div class="col-12">
+        <div class="image-preview d-flex flex-wrap gap-3 mt-3">
+          <div class="image-box position-relative" *ngFor="let img of selectedImages; let i = index">
+            <img [src]="img" alt="Preview" class="img-thumbnail" style="width: 120px; height: 120px; object-fit: cover;" />
+            <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0"
+              (click)="removeImage(i)">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="col-12 text-center mt-3">
+        <button type="submit" class="btn btn-primary add-button px-4">{{ isEditMode ? 'Update Product' : 'Add Product' }}</button>
+      </div>
+
+    </form>
+  </div>
+</div>

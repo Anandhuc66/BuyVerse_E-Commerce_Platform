@@ -1,0 +1,31 @@
+<div class="main-container">
+    <div class="add-product-container container">
+        <h3 class="mb-4 text-center">{{ isEditMode ? 'Edit Role' : 'Add New Role' }}</h3>
+        <form
+        [formGroup]="rolesForm"
+        (ngSubmit)="onSubmit()"
+        enctype="multipart/form-data"
+        class="row g-3"
+        >
+                <!-- Row 1 -->
+            <div class="col-12">
+                <label>Role Name</label>
+                <input type="text" class="form-control" formControlName="displayName" />
+            </div>
+
+            <!-- Row 2 -->
+            <div class="col-12">
+                <label>Description</label>
+                <textarea
+                class="form-control"
+                formControlName="description"
+                rows="3"
+                ></textarea>
+
+            </div>
+            <div class="col-12 text-center mt-3">
+                <button type="submit" class="btn btn-primary add-button px-4">{{ isEditMode ? 'Update Role' : 'Add Role' }}</button>
+            </div>
+        </form>
+    </div>
+</div>

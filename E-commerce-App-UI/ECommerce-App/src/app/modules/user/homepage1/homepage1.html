@@ -1,0 +1,148 @@
+<div class="homepage">
+
+  <!-- ============= HERO CAROUSEL ============= -->
+  <section class="hero-section">
+    <div *ngIf="loading; else carouselContent">
+      <div class="skeleton skeleton-banner w-100"></div>
+    </div>
+    <ng-template #carouselContent>
+      <div class="hero-carousel">
+        <div class="hero-slides">
+          <div
+            class="hero-slide"
+            *ngFor="let slide of slides; let i = index"
+            [class.active]="i === currentSlide"
+            [@fadeAnimation]="i === currentSlide ? 'active' : 'inactive'"
+          >
+            <img [src]="slide.image" [alt]="slide.alt" class="hero-image" />
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+              <h1 class="hero-title">{{ slide.title }}</h1>
+              <p class="hero-subtitle">{{ slide.subtitle }}</p>
+              <a routerLink="/product-list" class="btn btn-primary btn-lg hero-cta">
+                {{ slide.cta }} <i class="bi bi-arrow-right ms-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="hero-indicators">
+          <button
+            *ngFor="let slide of slides; let i = index"
+            type="button"
+            class="indicator-dot"
+            [class.active]="i === currentSlide"
+            (click)="goToSlide(i)"
+          ></button>
+        </div>
+      </div>
+    </ng-template>
+  </section>
+
+  <!-- ============= FEATURES BAR ============= -->
+  <section class="features-bar">
+    <div class="features-inner">
+      <div *ngIf="loading; else featureContent" class="features-skeleton">
+        <div class="feature-skel" *ngFor="let n of [1,2,3,4]">
+          <div class="skeleton skeleton-icon"></div>
+          <div class="skeleton skeleton-text" style="width: 80px"></div>
+        </div>
+      </div>
+      <ng-template #featureContent>
+        <div class="feature-card" *ngFor="let feature of features">
+          <div class="feature-icon-wrap">
+            <i [class]="feature.icon"></i>
+          </div>
+          <div class="feature-text">
+            <span class="feature-title">{{ feature.title }}</span>
+            <span class="feature-sub">{{ feature.subtitle }}</span>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </section>
+
+  <!-- ============= TRENDING NOW — AUTO-SCROLL ============= -->
+  <section class="trending-section" *ngIf="!loading && products.length">
+    <div class="trending-inner">
+      <div class="section-header">
+        <div class="trending-header-left">
+          <h2 class="section-title">Trending Now</h2>
+          <span class="trending-badge">Auto-refreshing</span>
+        </div>
+        <div class="trending-controls">
+          <button class="scroll-btn" (click)="scrollTrending('left')" aria-label="Scroll left">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+          <button class="scroll-btn" (click)="scrollTrending('right')" aria-label="Scroll right">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+      <div class="trending-track" #trendingTrack
+           (mouseenter)="pauseTrendingScroll()"
+           (mouseleave)="resumeTrendingScroll()">
+        <a class="trending-card"
+           *ngFor="let product of trendingProducts; trackBy: trackByProduct"
+           [routerLink]="['/product', product.id]">
+          <div class="trending-card-image">
+            <img [src]="baseUrl + product.imageUrls[0]" [alt]="product.name" loading="lazy" />
+          </div>
+          <div class="trending-card-body">
+            <span class="trending-card-title">{{ product.name }}</span>
+            <span class="trending-card-price">₹{{ product.price | number }}</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= PRODUCT GRID ============= -->
+  <section class="products-section">
+    <div class="products-inner">
+      <div class="section-header">
+        <h2 class="section-title">Popular Picks</h2>
+        <a routerLink="/product-list" class="view-all-link">
+          View All <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+      </div>
+
+      <div *ngIf="loading; else productContent" class="product-grid">
+        <div *ngFor="let n of [].constructor(8)" class="product-card-skeleton">
+          <div class="skeleton skeleton-img"></div>
+          <div style="padding: 16px">
+            <div class="skeleton skeleton-text" style="width: 80%"></div>
+            <div class="skeleton skeleton-text" style="width: 50%; margin-top: 8px"></div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #productContent>
+        <div class="product-grid">
+          <div
+            class="product-card"
+            *ngFor="let product of products; trackBy: trackByProduct"
+          >
+            <a [routerLink]="['/product', product.id]" class="product-card-link">
+              <div class="product-card-image">
+                <img
+                  [src]="baseUrl + product.imageUrls[0]"
+                  [alt]="product.name"
+                  loading="lazy"
+                  width="200"
+                  height="200"
+                />
+              </div>
+              <div class="product-card-body">
+                <h6 class="product-card-title">{{ product.name }}</h6>
+                <div class="product-card-price">
+                  <span class="price-current">₹{{ product.price | number }}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </section>
+
+</div>

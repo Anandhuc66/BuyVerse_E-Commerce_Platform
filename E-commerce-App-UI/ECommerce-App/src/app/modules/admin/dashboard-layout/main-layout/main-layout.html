@@ -1,0 +1,9 @@
+<div class="parent" [class.collapsed]="isCollapsed">
+  <app-side-bar  [isCollapsed]="isCollapsed" class="div1"></app-side-bar>
+  <app-header (toggleSidebar)="toggleSidebar()" class="div2"></app-header>
+
+  <!-- main content area -->
+  <div class="div5">
+    <router-outlet></router-outlet>
+  </div>
+</div>

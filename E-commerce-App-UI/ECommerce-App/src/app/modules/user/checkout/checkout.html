@@ -1,0 +1,165 @@
+<div class="checkout-page">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-bar">
+    <a routerLink="/">Home</a>
+    <i class="bi bi-chevron-right"></i>
+    <a routerLink="/cart">Cart</a>
+    <i class="bi bi-chevron-right"></i>
+    <span>Checkout</span>
+  </nav>
+
+  <h1 class="checkout-heading">Checkout</h1>
+
+  <!-- Skeleton Loading -->
+  <div *ngIf="loading" class="checkout-layout">
+    <div class="checkout-forms">
+      <div class="checkout-card">
+        <div class="skeleton skeleton-text" style="width:40%;height:20px;margin-bottom:20px;"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="skeleton" style="height:40px;border-radius:8px;"></div>
+          <div class="skeleton" style="height:40px;border-radius:8px;"></div>
+          <div class="skeleton" style="height:40px;border-radius:8px;"></div>
+          <div class="skeleton" style="height:40px;border-radius:8px;"></div>
+          <div class="skeleton" style="height:40px;border-radius:8px;grid-column:span 2;"></div>
+        </div>
+      </div>
+      <div class="checkout-card">
+        <div class="skeleton skeleton-text" style="width:30%;height:20px;margin-bottom:20px;"></div>
+        <div style="display:flex;gap:12px;">
+          <div class="skeleton" style="width:50%;height:60px;border-radius:8px;"></div>
+          <div class="skeleton" style="width:50%;height:60px;border-radius:8px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="checkout-summary">
+      <div class="summary-card">
+        <div class="skeleton skeleton-text" style="width:50%;height:18px;margin-bottom:16px;"></div>
+        <div class="skeleton skeleton-text" style="width:100%;height:14px;margin-bottom:8px;"></div>
+        <div class="skeleton skeleton-text" style="width:100%;height:14px;margin-bottom:8px;"></div>
+        <div class="skeleton" style="width:100%;height:44px;border-radius:8px;margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading" class="checkout-layout">
+
+    <!-- LEFT SECTION -->
+    <div class="checkout-forms">
+
+      <!-- Shipping Address -->
+      <div class="checkout-card">
+        <div class="card-section-header">
+          <i class="bi bi-geo-alt"></i>
+          <h5>Shipping Address</h5>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-field full-width">
+            <label>Full Address</label>
+            <input type="text" [(ngModel)]="address.fullAddress" placeholder="House, Street, Locality">
+          </div>
+
+          <div class="form-field">
+            <label>City</label>
+            <input type="text" [(ngModel)]="address.city" placeholder="City">
+          </div>
+
+          <div class="form-field">
+            <label>State</label>
+            <input type="text" [(ngModel)]="address.state" placeholder="State">
+          </div>
+
+          <div class="form-field">
+            <label>ZIP Code</label>
+            <input type="text" [(ngModel)]="address.zipCode" placeholder="ZIP Code">
+          </div>
+
+          <div class="form-field">
+            <label>Country</label>
+            <input type="text" [(ngModel)]="address.country" placeholder="Country">
+          </div>
+        </div>
+
+        <button class="add-address-btn" (click)="goToAddAddress()">
+          <i class="bi bi-plus-lg"></i> Add New Address
+        </button>
+      </div>
+
+      <!-- Payment Method -->
+      <div class="checkout-card">
+        <div class="card-section-header">
+          <i class="bi bi-credit-card"></i>
+          <h5>Payment Method</h5>
+        </div>
+
+        <div class="payment-options">
+          <label class="payment-option" [class.selected]="paymentMethod === 'cod'">
+            <input type="radio" id="cod" value="cod" [(ngModel)]="paymentMethod" name="payment">
+            <div class="option-content">
+              <i class="bi bi-cash-stack"></i>
+              <div>
+                <span class="option-title">Cash on Delivery</span>
+                <span class="option-desc">Pay when your order arrives</span>
+              </div>
+            </div>
+          </label>
+
+          <label class="payment-option" [class.selected]="paymentMethod === 'razorpay'">
+            <input type="radio" id="razorpay" value="razorpay" [(ngModel)]="paymentMethod" name="payment">
+            <div class="option-content">
+              <i class="bi bi-wallet2"></i>
+              <div>
+                <span class="option-title">UPI / Wallet / Card</span>
+                <span class="option-desc">Pay securely via Razorpay</span>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT SECTION — Order Summary -->
+    <div class="checkout-summary">
+      <div class="summary-card">
+        <h4 class="summary-title">Order Summary</h4>
+
+        <div class="summary-items">
+          <div class="summary-item" *ngFor="let item of cartItems; trackBy: trackByCartItem">
+            <img [src]="item.image" [alt]="item.name">
+            <div class="summary-item-info">
+              <span class="summary-item-name">{{ item.name }}</span>
+              <span class="summary-item-meta">Qty: {{ item.quantity }} × ₹{{ item.price | number }}</span>
+            </div>
+            <span class="summary-item-total">₹{{ item.price * item.quantity | number }}</span>
+          </div>
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>₹{{ subtotal }}</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Shipping</span>
+          <span>₹{{ shipping }}</span>
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-row summary-total-row">
+          <span>Total</span>
+          <span>₹{{ total }}</span>
+        </div>
+
+        <button class="pay-btn" (click)="placeOrder()" [disabled]="isProcessing">
+          {{ isProcessing ? "Processing..." : "Pay ₹" + total }}
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
