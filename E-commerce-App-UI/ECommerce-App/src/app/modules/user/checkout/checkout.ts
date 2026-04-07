@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Service } from '../service';
 
@@ -41,7 +41,7 @@ export class Checkout implements OnInit {
 };
 
 
-  constructor(private readonly router: Router, private readonly userService: Service) {}
+  constructor(private readonly router: Router, private readonly userService: Service, private readonly cdr: ChangeDetectorRef) {}
 
 ngOnInit(): void {
   const userId = localStorage.getItem('userId');
@@ -64,11 +64,18 @@ ngOnInit(): void {
         this.address.zipCode = addr.zipCode;
         this.address.country = addr.country;
       }
+      this.loading = false;
+      this.cdr.detectChanges();
       },
       error: () => {
         this.userAddresses = [];
+        this.loading = false;
+        this.cdr.detectChanges();
       }
     });
+  } else {
+    this.loading = false;
+    this.cdr.detectChanges();
   }
 
   // 1. Checkout from cart page
