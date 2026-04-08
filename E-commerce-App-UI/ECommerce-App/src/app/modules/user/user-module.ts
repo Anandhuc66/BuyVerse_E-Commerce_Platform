@@ -11,6 +11,13 @@ import { Orders } from './orders/orders';
 import { PaymentSuccess } from './payment-success/payment-success';
 import { PaymentFailure } from './payment-failure/payment-failure';
 import { Profile } from './profile/profile';
+import { ContactUs } from './contact-us/contact-us';
+import { Faqs } from './faqs/faqs';
+import { ShippingInfo } from './shipping-info/shipping-info';
+import { ReturnsRefunds } from './returns-refunds/returns-refunds';
+import { PrivacyPolicy } from './privacy-policy/privacy-policy';
+import { TermsOfService } from './terms-of-service/terms-of-service';
+import { CookiePolicy } from './cookie-policy/cookie-policy';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -24,7 +31,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     Orders,
     PaymentSuccess,
     PaymentFailure,
-    Profile
+    Profile,
+    ContactUs,
+    Faqs,
+    ShippingInfo,
+    ReturnsRefunds,
+    PrivacyPolicy,
+    TermsOfService,
+    CookiePolicy
   ],
   imports: [
     CommonModule,

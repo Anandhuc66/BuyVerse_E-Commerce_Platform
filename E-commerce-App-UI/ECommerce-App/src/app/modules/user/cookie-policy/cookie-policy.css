@@ -1,0 +1,53 @@
+.policy-page { min-height: 70vh; background: var(--main-background-color); animation: fadeIn 0.3s ease-out; padding-bottom: var(--space-10); }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.page-container { max-width: 800px; margin: 0 auto; padding: 0 var(--space-6); }
+
+.breadcrumb { display: flex; align-items: center; gap: 8px; padding: var(--space-5) 0 0; font-size: 0.82rem; }
+.breadcrumb a { color: var(--button); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb i { font-size: 0.6rem; color: var(--secondary-text); }
+.breadcrumb span { color: var(--secondary-text); }
+
+.page-hero { background: linear-gradient(135deg, var(--button), var(--button-hover)); padding: var(--space-10) 0; margin-top: var(--space-5); border-radius: var(--radius-xl); max-width: 800px; margin-left: auto; margin-right: auto; }
+.page-hero h1 { color: #fff; font-size: 1.65rem; font-weight: 800; margin: 0 0 var(--space-2); letter-spacing: -0.025em; display: flex; align-items: center; gap: var(--space-3); }
+.page-hero h1 i { font-size: 1.4rem; }
+.page-hero p { color: rgba(255,255,255,0.7); font-size: 0.85rem; margin: 0; }
+
+.policy-intro { margin-top: var(--space-8); background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: var(--space-6); }
+.policy-intro p { font-size: 0.88rem; color: var(--secondary-text); margin: 0; line-height: 1.7; }
+
+.policy-content { margin-top: var(--space-8); }
+.policy-section { display: flex; gap: var(--space-5); padding: var(--space-6) 0; border-bottom: 1px solid var(--border-color); }
+.policy-section:last-child { border-bottom: none; }
+.section-number { width: 36px; height: 36px; border-radius: var(--radius-round); background: var(--button); color: #fff; font-size: 0.82rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.policy-section h2 { font-size: 1.05rem; font-weight: 700; color: var(--primary-text); margin: 0 0 var(--space-3); }
+.policy-section p { font-size: 0.86rem; color: var(--secondary-text); margin: 0 0 var(--space-3); line-height: 1.7; }
+.policy-section ul { margin: 0 0 var(--space-3); padding-left: var(--space-5); }
+.policy-section li { font-size: 0.84rem; color: var(--secondary-text); margin-bottom: var(--space-2); line-height: 1.6; }
+.policy-section a { color: var(--button); text-decoration: none; font-weight: 500; }
+.policy-section a:hover { text-decoration: underline; }
+
+/* Cookie Types */
+.cookie-types { display: flex; flex-direction: column; gap: var(--space-4); margin-top: var(--space-2); }
+.cookie-type { display: flex; align-items: flex-start; gap: var(--space-4); padding: var(--space-4); background: var(--main-background-color); border-radius: var(--radius-md); }
+.cookie-badge { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 10px; border-radius: var(--radius-pill); white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+.cookie-badge.essential { background: var(--success-bg); color: var(--success); }
+.cookie-badge.functional { background: var(--info-bg, #eff6ff); color: var(--info, #2563EB); }
+.cookie-badge.analytics { background: rgba(249, 115, 22, 0.1); color: var(--accent); }
+.cookie-badge.performance { background: var(--primary-50); color: var(--button); }
+.cookie-type h4 { font-size: 0.86rem; font-weight: 600; color: var(--primary-text); margin: 0 0 4px; }
+.cookie-type div p { font-size: 0.8rem; color: var(--secondary-text); margin: 0; line-height: 1.5; }
+
+/* Warning Box */
+.warning-box { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-4); background: var(--warning-bg, #fffbeb); border: 1px solid var(--warning-border, #fde68a); border-radius: var(--radius-md); margin-top: var(--space-3); }
+.warning-box i { color: var(--warning); font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+.warning-box p { font-size: 0.82rem; color: var(--secondary-text); margin: 0; line-height: 1.5; }
+
+@media (max-width: 768px) {
+  .page-hero { border-radius: 0; margin-top: 0; }
+  .policy-section { flex-direction: column; gap: var(--space-3); }
+  .cookie-type { flex-direction: column; gap: var(--space-2); }
+}
+@media (max-width: 480px) {
+  .page-container { padding: 0 var(--space-4); }
+}

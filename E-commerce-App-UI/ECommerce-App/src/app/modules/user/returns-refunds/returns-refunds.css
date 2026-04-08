@@ -1,0 +1,70 @@
+.returns-page { min-height: 70vh; background: var(--main-background-color); animation: fadeIn 0.3s ease-out; padding-bottom: var(--space-10); }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.page-container { max-width: 800px; margin: 0 auto; padding: 0 var(--space-6); }
+
+.breadcrumb { display: flex; align-items: center; gap: 8px; padding: var(--space-5) 0 0; font-size: 0.82rem; }
+.breadcrumb a { color: var(--button); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb i { font-size: 0.6rem; color: var(--secondary-text); }
+.breadcrumb span { color: var(--secondary-text); }
+
+.page-hero { background: linear-gradient(135deg, var(--button), var(--button-hover)); padding: var(--space-10) 0; margin-top: var(--space-5); border-radius: var(--radius-xl); max-width: 800px; margin-left: auto; margin-right: auto; }
+.page-hero h1 { color: #fff; font-size: 1.65rem; font-weight: 800; margin: 0 0 var(--space-2); letter-spacing: -0.025em; display: flex; align-items: center; gap: var(--space-3); }
+.page-hero h1 i { font-size: 1.4rem; }
+.page-hero p { color: rgba(255,255,255,0.85); font-size: 0.92rem; margin: 0; }
+
+/* Highlights */
+.highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-top: var(--space-8); }
+.highlight-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: var(--space-5); text-align: center; transition: all var(--transition-base); }
+.highlight-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
+.highlight-card i { font-size: 1.5rem; color: var(--button); margin-bottom: var(--space-3); display: block; }
+.highlight-card h4 { font-size: 0.88rem; font-weight: 700; color: var(--primary-text); margin: 0 0 4px; }
+.highlight-card p { font-size: 0.78rem; color: var(--secondary-text); margin: 0; }
+
+/* Section Block */
+.section-block { margin-top: var(--space-8); }
+.section-label { display: flex; align-items: center; gap: var(--space-2); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--secondary-text); margin-bottom: var(--space-4); }
+.section-label i { font-size: 0.9rem; color: var(--button); }
+
+.info-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: var(--space-6); }
+
+/* Policy Points */
+.policy-points { display: flex; flex-direction: column; gap: var(--space-3); }
+.policy-point { display: flex; align-items: flex-start; gap: var(--space-3); font-size: 0.86rem; color: var(--primary-text); line-height: 1.5; }
+.policy-point i { color: var(--success); font-size: 0.95rem; margin-top: 2px; flex-shrink: 0; }
+
+/* Steps */
+.steps { display: flex; flex-direction: column; gap: var(--space-5); }
+.step { display: flex; align-items: flex-start; gap: var(--space-4); }
+.step-badge { width: 32px; height: 32px; border-radius: var(--radius-round); background: var(--button); color: #fff; font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.step h4 { font-size: 0.88rem; font-weight: 600; color: var(--primary-text); margin: 0 0 2px; }
+.step div p { font-size: 0.8rem; color: var(--secondary-text); margin: 0; line-height: 1.5; }
+.step div a { color: var(--button); text-decoration: none; font-weight: 500; }
+.step div a:hover { text-decoration: underline; }
+
+/* Non-Returnable */
+.warning-card { background: var(--warning-bg, #fffbeb); border-color: var(--warning-border, #fde68a); }
+.non-return-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+.non-return-item { display: flex; align-items: center; gap: var(--space-2); font-size: 0.84rem; color: var(--primary-text); }
+.non-return-item i { color: var(--danger); font-size: 0.85rem; flex-shrink: 0; }
+
+/* Refund Table */
+.refund-table { width: 100%; border-collapse: collapse; }
+.refund-table th { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--secondary-text); padding: var(--space-3) var(--space-4); text-align: left; border-bottom: 2px solid var(--border-color); }
+.refund-table td { font-size: 0.86rem; color: var(--primary-text); padding: var(--space-4); border-bottom: 1px solid var(--border-color); }
+.refund-table tr:last-child td { border-bottom: none; }
+
+/* Page CTA */
+.page-cta { text-align: center; margin-top: var(--space-8); padding: var(--space-6); background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-lg); }
+.page-cta p { font-size: 0.86rem; color: var(--secondary-text); margin: 0; }
+.page-cta a { color: var(--button); font-weight: 600; text-decoration: none; }
+.page-cta a:hover { text-decoration: underline; }
+
+@media (max-width: 768px) {
+  .highlights { grid-template-columns: 1fr; }
+  .non-return-grid { grid-template-columns: 1fr; }
+  .page-hero { border-radius: 0; margin-top: 0; }
+}
+@media (max-width: 480px) {
+  .page-container { padding: 0 var(--space-4); }
+}

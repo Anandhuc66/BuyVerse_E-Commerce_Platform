@@ -9,6 +9,13 @@ import { PaymentSuccess } from './payment-success/payment-success';
 import { PaymentFailure } from './payment-failure/payment-failure';
 import { Orders } from './orders/orders';
 import { Profile } from './profile/profile';
+import { ContactUs } from './contact-us/contact-us';
+import { Faqs } from './faqs/faqs';
+import { ShippingInfo } from './shipping-info/shipping-info';
+import { ReturnsRefunds } from './returns-refunds/returns-refunds';
+import { PrivacyPolicy } from './privacy-policy/privacy-policy';
+import { TermsOfService } from './terms-of-service/terms-of-service';
+import { CookiePolicy } from './cookie-policy/cookie-policy';
 
 const routes: Routes = [
   {path:'',component:Homepage1},
@@ -21,6 +28,13 @@ const routes: Routes = [
   {path:'payment-failure',component:PaymentFailure},
   {path:'orders',component:Orders},
   {path:'profile',component:Profile},
+  {path:'contact-us',component:ContactUs},
+  {path:'faqs',component:Faqs},
+  {path:'shipping-info',component:ShippingInfo},
+  {path:'returns-refunds',component:ReturnsRefunds},
+  {path:'privacy-policy',component:PrivacyPolicy},
+  {path:'terms-of-service',component:TermsOfService},
+  {path:'cookie-policy',component:CookiePolicy},
 ];
 
 @NgModule({

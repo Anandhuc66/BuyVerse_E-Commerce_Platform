@@ -227,14 +227,19 @@ private initiateRazorpay(orderId: number, orderNumber: string): void {
           this.verifyRazorpayPayment(response, orderId, orderNumber);
         },
 
+        modal: {
+          ondismiss: () => {
+            this.cancelUnpaidOrder(orderId);
+          }
+        },
+
         theme: { color: "#3399cc" }
       };
 
       const rzpInstance = new Razorpay(options);
 
       rzpInstance.on('payment.failed', () => {
-        this.isProcessing = false;
-        alert('Payment failed. Please try again.');
+        this.cancelUnpaidOrder(orderId);
       });
 
       rzpInstance.open();
@@ -269,6 +274,18 @@ private verifyRazorpayPayment(response: any, orderId: number, orderNumber: strin
     error: () => {
       this.isProcessing = false;
       alert('Payment verification failed. Contact support.');
+    }
+  });
+}
+
+private cancelUnpaidOrder(orderId: number): void {
+  this.isProcessing = false;
+  this.userService.cancelOrder(orderId).subscribe({
+    next: () => {
+      alert('Payment was not completed. Your order has been cancelled.');
+    },
+    error: () => {
+      alert('Payment was not completed. Please cancel the pending order from My Orders.');
     }
   });
 }

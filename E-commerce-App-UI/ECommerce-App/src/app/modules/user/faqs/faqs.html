@@ -1,0 +1,52 @@
+<div class="faq-page">
+  <!-- Breadcrumb -->
+  <div class="page-container">
+    <nav class="breadcrumb">
+      <a routerLink="/">Home</a>
+      <i class="bi bi-chevron-right"></i>
+      <span>FAQs</span>
+    </nav>
+  </div>
+
+  <!-- Hero -->
+  <div class="faq-hero">
+    <div class="page-container">
+      <h1>Frequently Asked Questions</h1>
+      <p>Everything you need to know about shopping on Buyverse</p>
+    </div>
+  </div>
+
+  <div class="page-container">
+    <!-- FAQ Categories -->
+    <div class="faq-categories" *ngFor="let category of faqCategories">
+      <div class="category-header">
+        <i class="bi" [ngClass]="category.icon"></i>
+        <h2>{{ category.title }}</h2>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item" *ngFor="let faq of category.faqs" [class.open]="faq.open">
+          <button class="faq-question" (click)="toggleFaq(faq)">
+            <span>{{ faq.q }}</span>
+            <i class="bi" [ngClass]="faq.open ? 'bi-dash' : 'bi-plus'"></i>
+          </button>
+          <div class="faq-answer" *ngIf="faq.open">
+            <p>{{ faq.a }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Still need help -->
+    <div class="still-help">
+      <div class="still-help-content">
+        <i class="bi bi-headset"></i>
+        <div>
+          <h3>Still have questions?</h3>
+          <p>Can't find what you're looking for? Our support team is happy to help.</p>
+        </div>
+      </div>
+      <a routerLink="/contact-us" class="help-btn">Contact Support</a>
+    </div>
+  </div>
+</div>
