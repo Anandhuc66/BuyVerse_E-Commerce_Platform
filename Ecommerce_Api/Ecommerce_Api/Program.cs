@@ -297,4 +297,14 @@ async Task SeedRolesAndAdmin(IServiceProvider services)
             Console.WriteLine("FAILED to create admin user: " + string.Join(", ", result.Errors.Select(e => e.Description)));
         }
     }
+    else
+    {
+        // Ensure existing user has Admin role
+        var existingUser = await userManager.FindByEmailAsync(adminEmail);
+        if (existingUser != null && !await userManager.IsInRoleAsync(existingUser, "Admin"))
+        {
+            await userManager.AddToRoleAsync(existingUser, "Admin");
+            Console.WriteLine("SUCCESS: Existing user promoted to Admin.");
+        }
+    }
 }
