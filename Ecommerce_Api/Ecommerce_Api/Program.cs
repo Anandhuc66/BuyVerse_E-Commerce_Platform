@@ -219,6 +219,15 @@ app.UseAuthentication();  //  must come before Authorization
 app.UseAuthorization();
 
 // ============================================================
+// AUTO-APPLY MIGRATIONS (creates tables on first run)
+// ============================================================
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await db.Database.MigrateAsync();
+}
+
+// ============================================================
 // SEED ROLES & ADMIN ACCOUNT
 // ============================================================
 using (var scope = app.Services.CreateScope())
