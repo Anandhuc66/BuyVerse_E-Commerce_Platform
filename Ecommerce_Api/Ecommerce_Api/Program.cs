@@ -290,6 +290,11 @@ async Task SeedRolesAndAdmin(IServiceProvider services)
         if (result.Succeeded)
         {
             await userManager.AddToRoleAsync(adminUser, "Admin");
+            Console.WriteLine("SUCCESS: Admin user created.");
+        }
+        else
+        {
+            Console.WriteLine("FAILED to create admin user: " + string.Join(", ", result.Errors.Select(e => e.Description)));
         }
     }
 }
