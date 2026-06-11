@@ -1,7 +1,19 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "angular",
-  "buildCommand": "ng build --configuration production",
-  "outputDirectory": "dist/ECommerce-App",
-  "installCommand": "npm install"
+  "buildCommand": "npx ng build --configuration production && cp dist/ECommerce-App/browser/index.csr.html dist/ECommerce-App/browser/index.html",
+  "outputDirectory": "dist/ECommerce-App/browser",
+  "routes": [
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|svg|webp|gif|woff|woff2|ttf|eot))",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }
