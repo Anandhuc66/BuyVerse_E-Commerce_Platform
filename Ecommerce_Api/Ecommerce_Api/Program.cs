@@ -303,8 +303,17 @@ async Task SeedRolesAndAdmin(IServiceProvider services)
         var existingUser = await userManager.FindByEmailAsync(adminEmail);
         if (existingUser != null && !await userManager.IsInRoleAsync(existingUser, "Admin"))
         {
+            // Remove User role if present, then add Admin
+            if (await userManager.IsInRoleAsync(existingUser, "User"))
+                await userManager.RemoveFromRoleAsync(existingUser, "User");
             await userManager.AddToRoleAsync(existingUser, "Admin");
             Console.WriteLine("SUCCESS: Existing user promoted to Admin.");
+        }
+        else if (existingUser != null && await userManager.IsInRoleAsync(existingUser, "Admin") && await userManager.IsInRoleAsync(existingUser, "User"))
+        {
+            // Remove duplicate User role from Admin
+            await userManager.RemoveFromRoleAsync(existingUser, "User");
+            Console.WriteLine("SUCCESS: Removed duplicate User role from Admin.");
         }
     }
 }
