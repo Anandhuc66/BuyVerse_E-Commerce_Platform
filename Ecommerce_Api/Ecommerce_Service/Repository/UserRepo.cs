@@ -277,12 +277,17 @@ namespace Ecommerce_Service.Repository
             var supplier = await _context.SuppliersSet
             .FirstOrDefaultAsync(s => s.UserId == user.Id);
 
+            // Prioritize Admin > Supplier > User role
+            var primaryRole = roles.Contains("Admin") ? "Admin"
+                            : roles.Contains("Supplier") ? "Supplier"
+                            : roles.FirstOrDefault();
+
             result.Response = new UserResponse
             {
                 UserId = user.Id,
                 Email = user.Email,
                 FullName = user.FullName,
-                Role = roles.FirstOrDefault(),
+                Role = primaryRole,
                 Token = token,
                 Gender = user.Gender,
                 PhoneNumber = user.PhoneNumber,
