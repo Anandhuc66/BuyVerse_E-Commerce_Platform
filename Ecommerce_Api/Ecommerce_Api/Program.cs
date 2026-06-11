@@ -87,9 +87,9 @@ builder.Services.AddAuthentication(options =>
 //  DATABASE CONTEXT
 // ============================================================
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(
+    options.UseNpgsql(
         builder.Configuration.GetConnectionString("DataContextConnection"),
-        sqlOptions => sqlOptions.CommandTimeout(120)
+        npgsqlOptions => npgsqlOptions.CommandTimeout(120)
     )
 );
 
