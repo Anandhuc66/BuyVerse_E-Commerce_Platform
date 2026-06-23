@@ -147,7 +147,7 @@ export class ProductAdd implements OnInit {
       formData.append('Price', this.productForm.get('price')?.value);
       formData.append('StockQuantity', this.productForm.get('stockQuantity')?.value);
       formData.append('SKU', this.productForm.get('sku')?.value);
-      formData.append('CategoryId', this.productForm.get('subCategoryId')?.value);
+      formData.append('SubCategoryId', this.productForm.get('subCategoryId')?.value);
       formData.append('SupplierId', supplierId ?? '');
       this.selectedFiles.forEach((file) => {
         formData.append('Images', file, file.name);
