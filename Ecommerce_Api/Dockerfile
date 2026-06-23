@@ -11,9 +11,12 @@ COPY Ecommerce_Common/Ecommerce_Common.csproj Ecommerce_Common/
 
 RUN dotnet restore
 
+# Cache bust - forces rebuild when source changes
+ARG CACHEBUST=1
+
 # Copy everything else and publish
 COPY . .
-RUN dotnet publish Ecommerce_Api/Ecommerce_Api.csproj -c Release -o /app/publish
+RUN echo "Build timestamp: $(date)" && dotnet publish Ecommerce_Api/Ecommerce_Api.csproj -c Release -o /app/publish --no-restore
 
 # Stage 2: Runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
