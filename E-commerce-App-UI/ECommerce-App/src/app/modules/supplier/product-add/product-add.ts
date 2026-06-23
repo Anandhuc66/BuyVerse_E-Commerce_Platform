@@ -20,6 +20,7 @@ export class ProductAdd implements OnInit {
   editId: number | null = null;
 
   categories: any[] = [];
+  subCategories: any[] = [];
 
   constructor(
     private readonly fb: FormBuilder,
@@ -37,6 +38,7 @@ export class ProductAdd implements OnInit {
       stockQuantity: [0, Validators.required],
       sku: ['', Validators.required],
       categoryId: ['', Validators.required],
+      subCategoryId: ['', Validators.required],
       supplierId: [{ value: '', disabled: true }, Validators.required]
     });
 
@@ -53,8 +55,17 @@ export class ProductAdd implements OnInit {
         price: editData.price,
         stockQuantity: editData.stockQuantity,
         sku: editData.sku,
-        categoryId: editData.categoryId || editData.subCategoryId || ''
+        categoryId: editData.categoryId || ''
       });
+      // Load subcategories for the selected category, then set subCategoryId
+      if (editData.categoryId) {
+        this.http.get<any>(`${environment.baseUrl}SubCategory/ByCategory/${editData.categoryId}`).subscribe({
+          next: (res) => {
+            this.subCategories = res.response || [];
+            this.productForm.patchValue({ subCategoryId: editData.subCategoryId || '' });
+          }
+        });
+      }
       if (editData.imageUrls?.length) {
         this.selectedImages = editData.imageUrls.map((url: string) => `${environment.assetUrl}${url}`);
       }
@@ -75,6 +86,21 @@ export class ProductAdd implements OnInit {
       },
       error: () => { this.categories = []; }
     });
+  }
+
+  onCategoryChange(): void {
+    const categoryId = this.productForm.get('categoryId')?.value;
+    this.productForm.patchValue({ subCategoryId: '' });
+    if (categoryId) {
+      this.http.get<any>(`${environment.baseUrl}SubCategory/ByCategory/${categoryId}`).subscribe({
+        next: (res) => {
+          this.subCategories = res.response || [];
+        },
+        error: () => { this.subCategories = []; }
+      });
+    } else {
+      this.subCategories = [];
+    }
   }
 
   onFileSelected(event: any): void {
@@ -103,7 +129,7 @@ export class ProductAdd implements OnInit {
         price: this.productForm.get('price')?.value,
         stockQuantity: this.productForm.get('stockQuantity')?.value,
         sku: this.productForm.get('sku')?.value,
-        subCategoryId: this.productForm.get('categoryId')?.value,
+        subCategoryId: this.productForm.get('subCategoryId')?.value,
         supplierId: this.productForm.get('supplierId')?.value
       };
       this.supplierService.updateProduct(updatePayload).subscribe({
@@ -121,7 +147,7 @@ export class ProductAdd implements OnInit {
       formData.append('Price', this.productForm.get('price')?.value);
       formData.append('StockQuantity', this.productForm.get('stockQuantity')?.value);
       formData.append('SKU', this.productForm.get('sku')?.value);
-      formData.append('CategoryId', this.productForm.get('categoryId')?.value);
+      formData.append('CategoryId', this.productForm.get('subCategoryId')?.value);
       formData.append('SupplierId', supplierId ?? '');
       this.selectedFiles.forEach((file) => {
         formData.append('Images', file, file.name);
