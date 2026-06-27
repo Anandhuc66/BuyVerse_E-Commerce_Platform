@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Ecommerce_Entity.Models;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 
 namespace Ecommerce_Api.Controllers
 {
@@ -11,10 +13,28 @@ namespace Ecommerce_Api.Controllers
     public class testController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly Cloudinary _cloudinary;
 
-        public testController(UserManager<ApplicationUser> userManager)
+        public testController(UserManager<ApplicationUser> userManager, Cloudinary cloudinary)
         {
             _userManager = userManager;
+            _cloudinary = cloudinary;
+        }
+
+        // TEMPORARY: Test Cloudinary connectivity
+        [AllowAnonymous]
+        [HttpGet("test-cloudinary")]
+        public async Task<IActionResult> TestCloudinary()
+        {
+            try
+            {
+                var result = await _cloudinary.PingAsync();
+                return Ok(new { status = "OK", cloudName = _cloudinary.Api.Account.Cloud, result = result.StatusCode });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { status = "FAILED", error = ex.Message, cloudName = _cloudinary.Api.Account.Cloud ?? "NULL" });
+            }
         }
 
         // TEMPORARY: One-time fix endpoint - remove after use
