@@ -61,7 +61,7 @@ export class ProductList implements OnInit {
           price: p.price,
           category: p.subCategoryName,
           brand: p.supplierName,
-          image: p.imageUrls?.length ? `${environment.assetUrl}${p.imageUrls[0]}` : 'assets/no-image.png'
+          image: p.imageUrls?.length ? (p.imageUrls[0].startsWith('http') ? p.imageUrls[0] : `${environment.assetUrl}${p.imageUrls[0]}`) : 'assets/no-image.png'
         }));
 
         // Extract brand list
@@ -144,7 +144,7 @@ export class ProductList implements OnInit {
         price: p.price,
         category: p.subCategoryName,
         brand: p.supplierName,
-          image: p.imageUrls?.length ? `${environment.assetUrl}${p.imageUrls[0]}` : 'assets/no-image.png'
+          image: p.imageUrls?.length ? (p.imageUrls[0].startsWith('http') ? p.imageUrls[0] : `${environment.assetUrl}${p.imageUrls[0]}`) : 'assets/no-image.png'
       }));
 
       // Extract brands dynamically

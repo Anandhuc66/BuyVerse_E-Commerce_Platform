@@ -4,6 +4,8 @@ using Ecommerce_Entity.DTO;
 using Ecommerce_Entity.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
@@ -14,8 +16,13 @@ namespace Ecommerce_Service.Repository
     public class ProductImageRepo : IProductImageRepo
     {
         private readonly ApplicationDbContext _context;
+        private readonly Cloudinary _cloudinary;
 
-        public ProductImageRepo(ApplicationDbContext context) => _context = context;
+        public ProductImageRepo(ApplicationDbContext context, Cloudinary cloudinary)
+        {
+            _context = context;
+            _cloudinary = cloudinary;
+        }
 
         // ===============================
         // Get All
@@ -90,24 +97,19 @@ namespace Ecommerce_Service.Repository
                 return result;
             }
 
-            // Save file to disk
-            string webRootPath = env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-            string uploadPath = Path.Combine(webRootPath, "uploads");
-            if (!Directory.Exists(uploadPath))
-                Directory.CreateDirectory(uploadPath);
-
-            var fileName = $"{Guid.NewGuid()}{ext}";
-            var filePath = Path.Combine(uploadPath, fileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            // Upload to Cloudinary
+            using var stream = model.Image.OpenReadStream();
+            var uploadParams = new ImageUploadParams
             {
-                await model.Image.CopyToAsync(stream);
-            }
+                File = new FileDescription(model.Image.FileName, stream),
+                Folder = "buyverse/products"
+            };
+            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
             var image = new ProductImage
             {
                 ProductId = model.ProductId,
-                ImageUrl = $"uploads/{fileName}",
+                ImageUrl = uploadResult.SecureUrl.ToString(),
                 IsPrimary = model.IsPrimary
             };
 
@@ -152,12 +154,6 @@ namespace Ecommerce_Service.Repository
                 return result;
             }
 
-            string webRootPath = env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-            string uploadPath = Path.Combine(webRootPath, "uploads");
-
-            if (!Directory.Exists(uploadPath))
-                Directory.CreateDirectory(uploadPath);
-
             var imagesList = new List<ProductImage>();
 
             // Validate ALL files BEFORE writing any to disk (prevents orphaned files)
@@ -189,24 +185,23 @@ namespace Ecommerce_Service.Repository
                     oldPrimary.IsPrimary = false;
             }
 
-            // All validated — now write files
+            // All validated — now upload to Cloudinary
             for (int i = 0; i < model.Images.Count; i++)
             {
                 var file = model.Images[i];
 
-                string extension = Path.GetExtension(file.FileName).ToLowerInvariant();
-                string fileName = $"{Guid.NewGuid()}{extension}";
-                string filePath = Path.Combine(uploadPath, fileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                using var stream = file.OpenReadStream();
+                var uploadParams = new ImageUploadParams
                 {
-                    await file.CopyToAsync(stream);
-                }
+                    File = new FileDescription(file.FileName, stream),
+                    Folder = "buyverse/products"
+                };
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
                 imagesList.Add(new ProductImage
                 {
                     ProductId = model.ProductId,
-                    ImageUrl = $"uploads/{fileName}",
+                    ImageUrl = uploadResult.SecureUrl.ToString(),
                     IsPrimary = i == model.PrimaryIndex
                 });
             }

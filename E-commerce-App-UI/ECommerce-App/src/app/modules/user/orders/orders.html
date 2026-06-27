@@ -70,7 +70,7 @@
       <div class="order-items">
         <div *ngFor="let item of order.items; trackBy: trackByOrderItem" class="order-item-row">
           <img
-            [src]="item.productImage ? baseUrl + item.productImage : 'assets/placeholder.png'"
+            [src]="item.productImage ? (item.productImage.startsWith('http') ? item.productImage : baseUrl + item.productImage) : 'assets/placeholder.png'"
             [alt]="item.productName"
           >
           <div class="order-item-info">

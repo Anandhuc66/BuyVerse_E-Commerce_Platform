@@ -8,6 +8,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using QuestPDF.Infrastructure;
+using CloudinaryDotNet;
 using System.Text;
 
 
@@ -147,6 +148,17 @@ QuestPDF.Settings.License = LicenseType.Community;
 //  RESPONSE CACHING
 // ============================================================
 builder.Services.AddResponseCaching();
+
+// ============================================================
+//  CLOUDINARY CONFIGURATION
+// ============================================================
+var cloudinarySettings = builder.Configuration.GetSection("Cloudinary");
+var cloudinaryAccount = new Account(
+    cloudinarySettings["CloudName"],
+    cloudinarySettings["ApiKey"],
+    cloudinarySettings["ApiSecret"]
+);
+builder.Services.AddSingleton(new Cloudinary(cloudinaryAccount));
 
 
 // ============================================================

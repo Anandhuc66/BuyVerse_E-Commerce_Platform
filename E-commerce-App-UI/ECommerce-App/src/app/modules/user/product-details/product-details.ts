@@ -109,10 +109,10 @@ loadProductById(id: number) {
         title: p.name,                     // FIXED
         price: p.price,
         description: p.description,
-        image: images.length ? this.baseUrl + images[0] : 'assets/no-image.png',
+        image: images.length ? (images[0].startsWith('http') ? images[0] : this.baseUrl + images[0]) : 'assets/no-image.png',
         rating: 4.5,
         category: p.categoryName,              // FIXED
-        images: images.map((url: string) => this.baseUrl + url), // FIXED
+        images: images.map((url: string) => url.startsWith('http') ? url : this.baseUrl + url), // FIXED
         subCategoryId: p.subCategoryId
       };
 
@@ -145,10 +145,10 @@ loadProductById(id: number) {
               title: p.name,
               price: p.price,
               description: p.description,
-              image: p.imageUrls?.length ? this.baseUrl + p.imageUrls[0] : 'assets/no-image.png',
+              image: p.imageUrls?.length ? (p.imageUrls[0].startsWith('http') ? p.imageUrls[0] : this.baseUrl + p.imageUrls[0]) : 'assets/no-image.png',
               rating: 4.5,
               category: p.categoryName,
-              images: p.imageUrls?.map((url: string) => this.baseUrl + url) || []
+              images: p.imageUrls?.map((url: string) => url.startsWith('http') ? url : this.baseUrl + url) || []
             }));
         },
         error: () => this.similarProducts = []

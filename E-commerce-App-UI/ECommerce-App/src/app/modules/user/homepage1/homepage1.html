@@ -85,7 +85,7 @@
            *ngFor="let product of trendingProducts; trackBy: trackByProduct"
            [routerLink]="['/product', product.id]">
           <div class="trending-card-image">
-            <img [src]="baseUrl + product.imageUrls[0]" [alt]="product.name" loading="lazy" />
+            <img [src]="product.imageUrls[0].startsWith('http') ? product.imageUrls[0] : baseUrl + product.imageUrls[0]" [alt]="product.name" loading="lazy" />
           </div>
           <div class="trending-card-body">
             <span class="trending-card-title">{{ product.name }}</span>
@@ -125,7 +125,7 @@
             <a [routerLink]="['/product', product.id]" class="product-card-link">
               <div class="product-card-image">
                 <img
-                  [src]="baseUrl + product.imageUrls[0]"
+                  [src]="product.imageUrls[0].startsWith('http') ? product.imageUrls[0] : baseUrl + product.imageUrls[0]"
                   [alt]="product.name"
                   loading="lazy"
                   width="200"

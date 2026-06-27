@@ -78,7 +78,7 @@ export class Cart implements OnInit {
           price: cart.productPrice,
           quantity: cart.quantity,
           image: cart.imageUrls && cart.imageUrls.length > 0
-            ? this.baseUrl + cart.imageUrls[0]
+            ? (cart.imageUrls[0].startsWith('http') ? cart.imageUrls[0] : this.baseUrl + cart.imageUrls[0])
             : 'assets/placeholder.png'
         }));
         this.loading = false;

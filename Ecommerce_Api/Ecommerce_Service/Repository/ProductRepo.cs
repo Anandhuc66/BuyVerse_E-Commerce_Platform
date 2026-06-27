@@ -4,6 +4,8 @@ using Ecommerce_Entity.DTO;
 using Ecommerce_Entity.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +16,12 @@ namespace Ecommerce_Service.Repository
     public class ProductRepo : IProductRepo
     {
         private readonly ApplicationDbContext _context;
-        public ProductRepo(ApplicationDbContext context) => _context = context;
+        private readonly Cloudinary _cloudinary;
+        public ProductRepo(ApplicationDbContext context, Cloudinary cloudinary)
+        {
+            _context = context;
+            _cloudinary = cloudinary;
+        }
 
         // GET ALL PRODUCTS
         // =============================
@@ -394,12 +401,6 @@ namespace Ecommerce_Service.Repository
             // Save images
             if (model.Images != null && model.Images.Any())
             {
-                string root = env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-                string uploadPath = Path.Combine(root, "uploads");
-
-                if (!Directory.Exists(uploadPath))
-                    Directory.CreateDirectory(uploadPath);
-
                 foreach (var img in model.Images)
                 {
                     // Validate file type
@@ -418,16 +419,18 @@ namespace Ecommerce_Service.Repository
                         return result;
                     }
 
-                    string fileName = $"{Guid.NewGuid()}{ext}";
-                    string filePath = Path.Combine(uploadPath, fileName);
-
-                    using (var fs = new FileStream(filePath, FileMode.Create))
-                        await img.CopyToAsync(fs);
+                    using var stream = img.OpenReadStream();
+                    var uploadParams = new ImageUploadParams
+                    {
+                        File = new FileDescription(img.FileName, stream),
+                        Folder = "buyverse/products"
+                    };
+                    var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
                     await _context.ProductImagesSet.AddAsync(new ProductImage
                     {
                         ProductId = product.Id,
-                        ImageUrl = $"uploads/{fileName}",
+                        ImageUrl = uploadResult.SecureUrl.ToString(),
                         IsPrimary = false
                     });
                 }
